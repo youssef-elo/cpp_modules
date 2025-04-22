@@ -10,7 +10,7 @@ INCLUDES = Contact.hpp PhoneBook.hpp
 all : $(NAME)
 
 $(NAME) : $(OFILES)
-	cc $(FLAGS) $(OFILES) -o $(NAME) 
+	c++ $(FLAGS) $(OFILES) -o $(NAME)
 
 %.o : %.cpp $(INCLUDES)
 	c++ $(FLAGS) -c $< -o $@
@@ -20,4 +20,5 @@ clean :
 
 fclean : clean
 	rm -rf $(NAME)
-	
+
+re : fclean all

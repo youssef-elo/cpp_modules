@@ -1,5 +1,7 @@
 #include "Contact.hpp"
 
+int Contact::start_index = 1;
+
 Contact::Contact()
 {
 	name = "EMPTY";
@@ -8,6 +10,45 @@ Contact::Contact()
 	phone_number = "EMPTY";
 	phone_number = "EMPTY";
 	darkest_secret = "EMPTY";
+	initialized = 0;
+	index = start_index;
+	start_index++;
+}
+
+int Contact::is_initiliazed()
+{
+	return initialized;
+}
+
+std::string Contact::truncate(std::string str)
+{
+	if (str.length() < 9)
+		return str;
+	return str.substr(0, 9) + ".";
+}
+
+int Contact::print_info()
+{
+	if (!initialized)
+		return 0;
+	std::cout << std::setw(10) << std::right << index << "|" << 
+		std::setw(10) << std::right << truncate(name) << "|"
+		 << std::setw(10) << std::right << truncate(last_name) << "|"
+		 << std::setw(10) << std::right << truncate(nickname) << "|" << std::endl;
+	return 1;
+}
+int Contact::full_info()
+{
+	if (!initialized)
+		return 0;
+	std::cout << std::endl;
+	std::cout << "First Name : " << name << std::endl;
+	std::cout << "Last Name : " << last_name << std::endl;
+	std::cout << "Nickname : " << nickname << std::endl;
+	std::cout << "Phone Number : " << phone_number << std::endl;
+	std::cout << "darkest secret : " << darkest_secret << std::endl;
+	std::cout << std::endl;
+	return 1;
 }
 
 int Contact::printable(std::string str)
@@ -54,6 +95,7 @@ int Contact::set_secret(std::string secret)
 	if (printable(secret))
 	{
 		darkest_secret = secret;
+		initialized = 1;
 		return 1;
 	}
 	return 0;
