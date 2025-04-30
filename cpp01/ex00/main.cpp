@@ -1,10 +1,12 @@
 #include "Zombie.hpp"
 
+Zombie* newZombie( std::string name );
+void randomChump( std::string name );
+
 int main()
 {
-	Zombie *first = new Zombie("heap zombie");
-	Zombie second("stack zombie");
+	Zombie *first = newZombie("heap zombie");
 	first->announce();
-	second.announce();
+	randomChump("stack zombie");
 	delete first;
 }
