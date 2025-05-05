@@ -1,7 +1,7 @@
 NAME=harl_filter
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-FLAGS += -fsanitize=address
+# FLAGS += -fsanitize=address -g
 
 FILES= Harl.cpp  main.cpp
 

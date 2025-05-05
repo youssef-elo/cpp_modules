@@ -21,25 +21,17 @@ int main(int ac, char **av)
 		return (0);
 	}
 	int level = get_level(av[1]);
-	for (; level < 4; level++)
-	{
-		switch (level)
-		{
-			case 0:
-				subject.complain("DEBUG");
-				break ;
-			case 1:
-				subject.complain("INFO");
-				break ;
-			case 2:
-				subject.complain("WARNING");
-				break ;
-			case 3:
-				subject.complain("ERROR");
-				break ;
-			default: 
-				std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-				return (0);
-		}
-	}
+    switch (level)
+    {
+        case -1: 
+        {
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+            break ;
+        }
+        default :
+        {
+            subject.list(level);
+            break ;
+        }
+    }
 }

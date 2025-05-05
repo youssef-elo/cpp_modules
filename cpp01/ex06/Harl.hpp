@@ -14,6 +14,7 @@ class Harl{
 		static void (Harl::*methods[4])(void);
 	public:
 		void complain( std::string level);
+		void list( int index );
 };
 
 #endif

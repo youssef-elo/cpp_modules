@@ -38,3 +38,9 @@ void Harl::complain( std::string level)
 			(this->*methods[i])();
 	} 
 }
+
+void Harl::list(int index)
+{
+	for (; index < 4; index++)
+		this->complain(levels[index]);
+}

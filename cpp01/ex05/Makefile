@@ -1,7 +1,7 @@
 NAME=harl
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-FLAGS += -fsanitize=address
+# FLAGS += -fsanitize=address
 
 FILES= Harl.cpp  main.cpp
 
