@@ -7,5 +7,5 @@ HumanA::HumanA(std::string human_name, Weapon& starting_weapon)
 }
 void HumanA::attack()
 {
-	std::cout << name << " attacks with their " << weapon->getType() << std::endl;
+	std::cout << name << " attacks with their " << (weapon != NULL ? weapon->getType() : " Bare hands" ) << std::endl;
 }

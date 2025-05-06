@@ -1,9 +1,9 @@
 NAME=harl_filter
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-# FLAGS += -fsanitize=address -g
+FLAGS += -fsanitize=address -g
 
-FILES= Harl.cpp  main.cpp
+FILES= Harl.cpp main.cpp
 
 OFILES= $(FILES:.cpp=.o)
 

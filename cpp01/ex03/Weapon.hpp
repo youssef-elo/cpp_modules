@@ -7,10 +7,10 @@ class Weapon{
 	private:
 		std::string type;
 	public:
-		const std::string& getType( void );
-		void setType( std::string arg );
 		Weapon();
 		Weapon( std::string arg );
+		void setType( std::string arg );
+		const std::string& getType( void );
 };
 
 #endif

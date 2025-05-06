@@ -1,13 +1,23 @@
-NAME = megaphone
+NAME= megaphone
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS= -Wall -Werror -Wextra -std=c++98
+
+FILES= megaphone.cpp
+
+OFILES= $(FILES:.cpp=.o)
 
 all : $(NAME)
 
-$(NAME) : megaphone.cpp
-	c++ $(FLAGS) megaphone.cpp -o $(NAME)
+$(NAME) : $(OFILES)
+	c++ $(FLAGS) $(OFILES) -o $(NAME)
+
+%.o : %.cpp
+	c++ $(FLAGS) -c $< -o $@
 
 clean :
-	rm -rf $(NAME)
+	rm -rf $(OFILES)
 
 fclean : clean
+	rm -rf $(NAME)
+
+re : fclean all

@@ -3,7 +3,7 @@ NAME=zombie
 FLAGS= -Wall -Werror -Wextra -std=c++98
 # FLAGS += -fsanitize=address
 
-FILES= main.cpp  newZombie.cpp  randomChump.cpp  Zombie.cpp
+FILES= main.cpp newZombie.cpp randomChump.cpp Zombie.cpp
 
 OFILES= $(FILES:.cpp=.o)
 

@@ -2,7 +2,6 @@
 
 std::string Harl::levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-
 void (Harl::* Harl::methods[4])(void) = {
     &Harl::debug,
     &Harl::info,
