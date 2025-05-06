@@ -25,7 +25,6 @@ private:
 	std::string truncate(std::string);
 public:
 	Contact();
-	int is_initiliazed();
 	int print_info();
 	int full_info();
 	int set_name(std::string name);

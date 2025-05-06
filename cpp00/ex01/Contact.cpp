@@ -15,11 +15,6 @@ Contact::Contact()
 	start_index++;
 }
 
-int Contact::is_initiliazed()
-{
-	return initialized;
-}
-
 std::string Contact::truncate(std::string str)
 {
 	if (str.length() < 9)
