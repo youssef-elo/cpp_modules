@@ -29,10 +29,29 @@ void replace_instances(std::string& r_buffer, std::string s1, std::string s2)
 		r_buffer += str;
 }
 
+int mygetline(std::ifstream& input_f, std::string& line)
+{
+	char rc;
+	int i = 0;
+
+	line.clear();
+	while(input_f.get(rc))
+	{
+		line += rc;
+		if (rc == '\n')
+			return 1;
+		i++;
+	}
+	if (i == 0)
+		return 0;
+	return 1;
+}
+
 int main(int ac, char **av)
 {
 	std::string replace_file;
 	std::string r_buffer;
+	int i = 0;
 
 	if (ac != 4)
 		return (error_exit("Program takes these parameters: a filename and two strings, s1 and s2."));
@@ -45,9 +64,10 @@ int main(int ac, char **av)
 	std::ofstream output_f(replace_file.c_str());
 	if (!output_f)
 		return (error_exit("Cannot open file for writing"));
-	while(std::getline(input_f, r_buffer))
+	while(mygetline(input_f, r_buffer))
 	{
 		replace_instances(r_buffer, av[2], av[3]);
-		output_f << r_buffer <<std::endl;
+		output_f << r_buffer;
+		i++;
 	}
 }
