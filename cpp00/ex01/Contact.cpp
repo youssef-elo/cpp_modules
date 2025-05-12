@@ -18,8 +18,8 @@ Contact::Contact()
 std::string Contact::truncate(std::string str)
 {
 	if (str.length() < 9)
-		return str;
-	return str.substr(0, 9) + ".";
+		return (str);
+	return (str.substr(0, 9) + ".");
 }
 
 int Contact::print_info()

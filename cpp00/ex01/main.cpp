@@ -63,7 +63,7 @@ int get_index(PhoneBook &book, std::string prompt)
 	if (!book.list_item(index - 1))
 	{
 		std::cout << "Contact does not exist" << std::endl;
-		return 0;
+		return 1;
 	}
 	return 1;
 }
