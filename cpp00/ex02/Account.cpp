@@ -98,7 +98,7 @@ bool Account::makeWithdrawal(int withdrawal)
 				<< ";nb_withdrawals:" << _nbWithdrawals << std::endl;
 	return true;
 }
-#include <stdlib.h>
+
 void Account::_displayTimestamp()
 {
 	time_t unix_time;
