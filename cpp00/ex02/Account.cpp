@@ -98,10 +98,18 @@ bool Account::makeWithdrawal(int withdrawal)
 				<< ";nb_withdrawals:" << _nbWithdrawals << std::endl;
 	return true;
 }
-
+#include <stdlib.h>
 void Account::_displayTimestamp()
 {
-	std::cout << "[19920104_091532] ";
+	time_t unix_time;
+	char timestamp[40];
+	struct tm *local_time;
+
+	time(&unix_time);
+	local_time = localtime(&unix_time);
+	strftime(timestamp, 40, "%Y%m%d_%H%M%S" , local_time);
+	std::cout << "[" << timestamp << "] ";
+	// std::cout << "[19920104_091532] ";
 }
 
 Account::~Account(){
