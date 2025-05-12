@@ -1,6 +1,6 @@
 NAME= GlobalBanksters
 
-FLAGS= -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g
+FLAGS= -Wall -Wextra -Werror -std=c++98
 
 FILES= Account.cpp tests.cpp
 
