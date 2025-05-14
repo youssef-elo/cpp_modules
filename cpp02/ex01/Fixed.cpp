@@ -35,3 +35,30 @@ Fixed& Fixed::operator=(const Fixed& other)
 	num = other.getRawBits();
 	return *this;
 }
+
+Fixed::Fixed(const int integer)
+{
+	std::cout << "Int constructor called" << std::endl;
+	num = round(integer * std::pow(2, bits));	
+}
+Fixed::Fixed(const float floating)
+{
+	std::cout << "Float constructor called" << std::endl;
+	num = round(floating * std::pow(2, bits));	
+}
+
+float Fixed::toFloat( void ) const
+{
+	return num / pow(2, bits);
+}
+
+int Fixed::toInt( void ) const
+{
+	return num / pow(2, bits);
+}
+
+std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
+{
+	out << fixed.toFloat();
+	return out;
+}

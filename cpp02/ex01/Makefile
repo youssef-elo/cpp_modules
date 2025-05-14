@@ -1,4 +1,4 @@
-NAME=cannon
+NAME=fixed
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
 FLAGS += -fsanitize=address
