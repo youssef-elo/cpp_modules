@@ -20,17 +20,37 @@ class Fixed{
 		int toInt( void ) const;
 		float toFloat( void ) const;
 
-        bool operator<(const Fixed& left);
-        bool operator<=(const Fixed& left);
+        bool operator<(const Fixed& right);
+        bool operator<=(const Fixed& right);
 
-        bool operator>(const Fixed& left);
-        bool operator>=(const Fixed& left);
+        bool operator>(const Fixed& right);
+        bool operator>=(const Fixed& right);
         
-        bool operator!=(const Fixed& left);
-        bool operator==(const Fixed& left);
+        bool operator!=(const Fixed& right);
+        bool operator==(const Fixed& right);
+
+		Fixed operator+(const Fixed& right);
+		Fixed operator-(const Fixed& right);
+
+		Fixed operator*(const Fixed& right);
+		Fixed operator/(const Fixed& right);
+
+		Fixed& operator--();
+		Fixed& operator++();
+		Fixed operator--(int);
+		Fixed operator++(int);
+
+		static Fixed& min(Fixed& first, Fixed& second);
+		static Fixed& max(Fixed& first, Fixed& second);
+
+		static const Fixed& min(const Fixed& first, const Fixed& second);
+		static const Fixed& max(const Fixed& first, const Fixed& second);
 };
 
 
+
+
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 
 
 #endif
