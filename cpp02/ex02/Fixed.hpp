@@ -47,10 +47,6 @@ class Fixed{
 		static const Fixed& max(const Fixed& first, const Fixed& second);
 };
 
-
-
-
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
-
 
 #endif

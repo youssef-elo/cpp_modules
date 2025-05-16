@@ -37,22 +37,22 @@ Fixed& Fixed::operator=(const Fixed& other)
 Fixed::Fixed(const int integer)
 {
 	std::cout << "Int constructor called" << std::endl;
-	num = roundf(integer * std::pow(2, bits));	
+	num = roundf((float)integer * (1 << bits));	
 }
 Fixed::Fixed(const float floating)
 {
 	std::cout << "Float constructor called" << std::endl;
-	num = roundf(floating * std::pow(2, bits));	
+	num = roundf(floating * (1 << bits));	
 }
 
 float Fixed::toFloat( void ) const
 {
-	return num / pow(2, bits);
+	return num / (float)(1 << bits);
 }
 
 int Fixed::toInt( void ) const
 {
-	return num / pow(2, bits);
+	return num / (float)(1 << bits);
 }
 
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
