@@ -1,7 +1,7 @@
 NAME=triangle
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-FLAGS += -fsanitize=address
+# FLAGS += -fsanitize=address
 
 FILES= bsp.cpp Fixed.cpp main.cpp Point.cpp
 

@@ -42,17 +42,17 @@ Fixed::Fixed(const int integer)
 Fixed::Fixed(const float floating)
 {
 	std::cout << "Float constructor called" << std::endl;
-	num = roundf(floating * (1 << bits));	
+	num = roundf(floating * (1 << bits));
 }
 
 float Fixed::toFloat( void ) const
 {
-	return num / (float)(1 << bits);
+	return (num / (float)(1 << bits));
 }
 
 int Fixed::toInt( void ) const
 {
-	return num / (float)(1 << bits);
+	return (num / (1 << bits));
 }
 
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed)

@@ -1,21 +1,15 @@
 #include "Point.hpp"
 
-Point::Point(): x(0), y(0){}
+Point::Point() : x(0), y(0) {}
 
-Point::Point(const float x_arg, const float y_arg): x(x_arg), y(y_arg){std::cout << "float cpnstructor" << std::endl;}
-// Point::Point(const int x_arg, const int y_arg): x(x_arg), y(y_arg)
-// {
-// 	std::cout << "int constructor" << std::endl;
-// 	// std::cout << x.toFloat() << std::endl;
-// }
-// Point::Point(const int x_arg, const float y_arg): x(x_arg), y(y_arg){}
-// Point::Point(const float x_arg, const int y_arg): x(x_arg), y(y_arg){}
+Point::Point(const float x_arg, const float y_arg) : x(x_arg), y(y_arg) {}
 
-Point::~Point(){}
+Point::~Point() {}
 
-Point::Point(const Point& other): x(other.getx()), y(other.gety()){}
+Point::Point(const Point &other) : x(other.getx()), y(other.gety()) {}
 
-const Fixed Point::getx() const{
+const Fixed Point::getx() const
+{
 	return x;
 }
 const Fixed Point::gety() const
@@ -23,7 +17,8 @@ const Fixed Point::gety() const
 	return y;
 }
 
-Point& Point::operator=(const Point& other){
+Point &Point::operator=(const Point &other)
+{
 	other.getx();
 	return *this;
 }
