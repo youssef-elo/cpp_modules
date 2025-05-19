@@ -1,6 +1,7 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap() : ClapTrap(){
+	energy_points = 50;
 	std::cout << "ScavTrap Default constructor called" << std::endl;
 }
 
@@ -10,7 +11,8 @@ void ScavTrap::guardGate() const
 }
 
 ScavTrap::ScavTrap(std::string name_arg) : ClapTrap(name_arg) {
-	std::cout << "ScavTrap " << name << " Parameteried constructor called" << std::endl;
+	energy_points = 50;
+	std::cout << "ScavTrap Parameteried constructor called" << std::endl;
 }
 
 ScavTrap::~ScavTrap()

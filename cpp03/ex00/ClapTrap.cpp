@@ -20,7 +20,7 @@ unsigned int ClapTrap::get_attack_damage() const
 	return attack_damage;
 }
 
-ClapTrap::ClapTrap() : name(""),
+ClapTrap::ClapTrap() : name("default"),
 					   hit_points(10),
 					   energy_points(10),
 					   attack_damage(0)

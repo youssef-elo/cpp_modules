@@ -20,18 +20,18 @@ unsigned int ClapTrap::get_attack_damage() const
 	return attack_damage;
 }
 
-ClapTrap::ClapTrap() : name(""),
-					   hit_points(100),
-					   energy_points(50),
-					   attack_damage(20)
+ClapTrap::ClapTrap() : name("default"),
+					   hit_points(10),
+					   energy_points(10),
+					   attack_damage(0)
 {
 	std::cout << "ClapTrap Default constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name_arg) : name(name_arg),
-										   hit_points(100),
-										   energy_points(50),
-										   attack_damage(20)
+										   hit_points(10),
+										   energy_points(10),
+										   attack_damage(0)
 {
 	std::cout << "ClapTrap Parameterized constructor called" << std::endl;
 }

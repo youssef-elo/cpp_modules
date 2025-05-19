@@ -1,6 +1,9 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap() : ClapTrap(){
+	hit_points = 100;
+	energy_points = 50;
+	attack_damage = 20;
 	std::cout << "ScavTrap Default constructor called" << std::endl;
 }
 
@@ -10,7 +13,10 @@ void ScavTrap::guardGate() const
 }
 
 ScavTrap::ScavTrap(std::string name_arg) : ClapTrap(name_arg) {
-	std::cout << "ScavTrap " << name << " Parameteried constructor called" << std::endl;
+	hit_points = 100;
+	energy_points = 50;
+	attack_damage = 20;
+	std::cout << "ScavTrap Parameteried constructor called" << std::endl;
 }
 
 ScavTrap::~ScavTrap()
@@ -19,7 +25,7 @@ ScavTrap::~ScavTrap()
 }
 
 ScavTrap::ScavTrap(const ScavTrap &other): ClapTrap(other){
-	std::cout << "Scavtrap copy constructor called" << std::endl;
+	std::cout << "Scavtrap " << name << " copy constructor called" << std::endl;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
