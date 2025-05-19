@@ -1,7 +1,7 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap() : ClapTrap(){
-	std::cout << "ScavTrap " << name << " Default constructor called" << std::endl;
+	std::cout << "ScavTrap Default constructor called" << std::endl;
 }
 
 void ScavTrap::guardGate() const
@@ -19,7 +19,7 @@ ScavTrap::~ScavTrap()
 }
 
 ScavTrap::ScavTrap(const ScavTrap &other): ClapTrap(other){
-	std::cout << "Scavtrap " << name << " copy constructor called" << std::endl;
+	std::cout << "Scavtrap copy constructor called" << std::endl;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)

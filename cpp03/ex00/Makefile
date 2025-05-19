@@ -1,4 +1,4 @@
-NAME=triangle
+NAME=ClapTrap
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
 # FLAGS += -fsanitize=address
