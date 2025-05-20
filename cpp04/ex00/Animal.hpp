@@ -6,37 +6,15 @@
 
 class Animal
 {
-protected:
-	std::string type;
-public:
-	Animal();
-	~Animal();
-	Animal(const Animal& other);
-	Animal& operator=(const Animal& other);
+	protected:
+		std::string type;
+	public:
+		Animal();
+		virtual ~Animal();
+		Animal(const Animal& other);
+		Animal& operator=(const Animal& other);
+		virtual void makeSound() const;
+		const std::string& getType() const;
 };
-
-Animal::Animal()
-{
-	type = "Animal";
-	std::cout << "Animal constructor." << std::endl;
-}
-
-Animal::~Animal()
-{
-	std::cout << "Animal destructor." << std::endl;
-}
-
-Animal::Animal(const Animal &other)
-{
-	type = other.type;
-	std::cout << "Animal copy constructor." << std::endl;
-}
-
-Animal &Animal::operator=(const Animal &other)
-{
-	type = other.type;
-	std::cout << "Animal copy assignement constructor." << std::endl;
-	return *this;
-}
 
 #endif
