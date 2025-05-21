@@ -25,7 +25,7 @@ ClapTrap::ClapTrap() : name("default"),
 					   energy_points(10),
 					   attack_damage(0)
 {
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "ClapTrap Default constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name_arg) : name(name_arg),
@@ -33,7 +33,7 @@ ClapTrap::ClapTrap(std::string name_arg) : name(name_arg),
 										   energy_points(10),
 										   attack_damage(0)
 {
-	std::cout << "Parameterized constructor called" << std::endl;
+	std::cout << "ClapTrap Parameterized constructor called" << std::endl;
 }
 
 
@@ -42,7 +42,7 @@ ClapTrap::ClapTrap(const ClapTrap &other) : name(other.getname()),
 											energy_points(other.get_energy_points()),
 											attack_damage(other.get_attack_damage())
 {
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "ClapTrap Copy constructor called" << std::endl;
 }
 
 
@@ -52,7 +52,7 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 	hit_points = other.get_hit_points();
 	energy_points = other.get_energy_points();
 	attack_damage = other.get_attack_damage();
-	std::cout << "Copy assignement operator called" << std::endl;
+	std::cout << "Claptrap Copy assignement operator called" << std::endl;
 	return *this;
 }
 

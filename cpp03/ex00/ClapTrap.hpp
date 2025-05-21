@@ -31,5 +31,4 @@ public:
 	unsigned int get_attack_damage() const;
 };
 
-
 #endif

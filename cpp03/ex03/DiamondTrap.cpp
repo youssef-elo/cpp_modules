@@ -16,6 +16,12 @@ DiamondTrap::DiamondTrap() : ClapTrap() , FragTrap(), ScavTrap(){
 	std::cout << "DiamondTrap default constructor called." << std::endl;
 }
 
+DiamondTrap::DiamondTrap(const DiamondTrap &other) : ClapTrap(other), FragTrap(other) , ScavTrap(other)
+{
+	name = other.getname();
+	std::cout << "DiamondTrap copy constructor called." << std::endl;
+}
+
 DiamondTrap::DiamondTrap(std::string name_arg) : ClapTrap(name_arg) , FragTrap(name_arg), ScavTrap(name_arg){
 	name = name_arg;
 	std::cout << "DiamondTrap parameterized constructor called." << std::endl;

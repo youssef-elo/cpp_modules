@@ -1,5 +1,5 @@
-#ifndef DIAMOND_HPP
-# define DIAMOND_HPP
+#ifndef DIAMONDTRAP_HPP
+# define DIAMONDTRAP_HPP
 
 # include "FragTrap.hpp"
 # include "ScavTrap.hpp"
@@ -12,9 +12,10 @@ class DiamondTrap : public FragTrap, public ScavTrap
 		DiamondTrap();
 		~DiamondTrap();
 		DiamondTrap(std::string name_arg);
-		std::string getname() const;
+		DiamondTrap(const DiamondTrap& other);
 		DiamondTrap& operator=(const DiamondTrap& other);
 		void WhoamI();
+		std::string getname() const;
 		void attack(const std::string &target);
 };
 

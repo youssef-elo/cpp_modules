@@ -7,9 +7,20 @@ ScavTrap::ScavTrap() : ClapTrap(){
 	std::cout << "ScavTrap Default constructor called" << std::endl;
 }
 
-void ScavTrap::guardGate() const
+void ScavTrap::guardGate()
 {
-	std::cout << "ScavTrap " << name << " is now in Gate Keeper mode." << std::endl;
+	static int state;
+
+	if (!state)
+	{
+		std::cout << "ScavTrap " << name << " is now in Gate Keeper mode." << std::endl;
+		state = 1;
+	}
+	else if (state)
+	{
+		state = 0;
+		std::cout << "ScavTrap " << name << " is no longer in Gate Keeper mode." << std::endl;
+	}
 }
 
 ScavTrap::ScavTrap(std::string name_arg) : ClapTrap(name_arg) {
