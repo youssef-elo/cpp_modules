@@ -30,6 +30,8 @@ ScavTrap::ScavTrap(const ScavTrap &other): ClapTrap(other){
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 {
+	if (this == &other)
+		return *this;
 	std::cout << "ScavTrap copy assignement operator called" << std::endl;
 	ClapTrap::operator=(other);
 	return *this;

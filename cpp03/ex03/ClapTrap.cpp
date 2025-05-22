@@ -48,6 +48,8 @@ ClapTrap::ClapTrap(const ClapTrap &other) : name(other.getname()),
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 {
+	if (this == &other)
+		return *this;
 	name = other.getname();
 	hit_points = other.get_hit_points();
 	energy_points = other.get_energy_points();

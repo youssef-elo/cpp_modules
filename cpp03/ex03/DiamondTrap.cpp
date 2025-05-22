@@ -39,6 +39,8 @@ std::string DiamondTrap::getname() const
 
 DiamondTrap& DiamondTrap::operator=(const DiamondTrap& other)
 {
+	if (this == &other)
+		return *this;
 	ClapTrap::operator=(other);
 	name = other.getname();
 	return *this;
