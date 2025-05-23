@@ -7,37 +7,36 @@ void Dog::makeSound() const
 
 Dog::Dog()
 {
+	std::cout << "Dog default constructor." << std::endl;
 	dog_brain = new Brain;
 	type = "Dog";
-	std::cout << "Dog default constructor." << std::endl;
 }
 Dog::~Dog()
 {
-	delete dog_brain;
 	std::cout << type << " is being destroyed." << std::endl;
+	delete dog_brain;
 }
 
 Dog::Dog(const Dog &other) : Animal(other)
 {
-	dog_brain = new Brain;
-	dog_brain->operator=(*(other.dog_brain));
 	std::cout << "Dog copy constructor." << std::endl;
+	dog_brain = new Brain;
+	dog_brain = other.dog_brain;
 }
 
 Dog &Dog::operator=(const Dog &other)
 {
+	std::cout << "Dog copy assignement operator." << std::endl;
 	if (this == &other)
 		return *this;
-	dog_brain->operator=(*(other.dog_brain));
 	dog_brain = other.dog_brain;
 	type = other.type;
-	std::cout << "Dog copy assignement operator." << std::endl;
 	return *this;
 }
 
 const std::string& Dog::get_idea(int index) const
 {
-	dog_brain->get_idea(index);
+	 return dog_brain->get_idea(index);
 }
 
 void Dog::set_idea(std::string thought)

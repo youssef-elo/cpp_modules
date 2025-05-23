@@ -7,36 +7,36 @@ void Cat::makeSound() const
 
 Cat::Cat()
 {
+	std::cout << "Cat default constructor." << std::endl;
 	type = "Cat";
 	cat_brain = new Brain;
-	std::cout << "Cat default constructor." << std::endl;
 }
 Cat::~Cat()
 {
-	delete cat_brain;
 	std::cout << type << " is being destroyed." << std::endl;
+	delete cat_brain;
 }
 
 Cat::Cat(const Cat &other) : Animal(other)
 {
+	std::cout << "Cat copy constructor." << std::endl;
 	cat_brain = new Brain;
 	cat_brain = other.cat_brain;
-	std::cout << "Cat copy constructor." << std::endl;
 }
 
 Cat &Cat::operator=(const Cat &other)
 {
+	std::cout << "Cat copy assignement operator." << std::endl;
 	if (this == &other)
 		return *this;
 	type = other.type;
 	cat_brain = other.cat_brain;
-	std::cout << "Cat copy assignement operator." << std::endl;
 	return *this;
 }
 
 const std::string& Cat::get_idea(int index) const
 {
-	cat_brain->get_idea(index);
+	return cat_brain->get_idea(index);
 }
 
 void Cat::set_idea(std::string thought)

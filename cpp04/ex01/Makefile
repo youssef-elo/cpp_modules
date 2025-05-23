@@ -1,13 +1,13 @@
 NAME=Animals
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-# FLAGS += -fsanitize=address
+FLAGS += -fsanitize=address
 
-FILES= Animal.cpp Dog.cpp WrongAnimal.cpp Cat.cpp main.cpp WrongCat.cpp
+FILES= Animal.cpp Dog.cpp WrongAnimal.cpp Cat.cpp main.cpp WrongCat.cpp Brain.cpp
 
 OFILES= $(FILES:.cpp=.o)
 
-INCLUDES = Animal.hpp Dog.hpp WrongCat.hpp Cat.hpp WrongAnimal.hpp
+INCLUDES = Animal.hpp Dog.hpp WrongCat.hpp Cat.hpp WrongAnimal.hpp Brain.hpp
 
 all : $(NAME)
 

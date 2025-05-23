@@ -4,6 +4,8 @@
 Brain::Brain()
 {
 	index_of_thoughts = 0;
+	for ( int i = 0 ; i < 100; i++)
+		ideas[i] = "default";
 	std::cout << "Brain constructor" << std::endl;
 }
 
@@ -30,6 +32,7 @@ Brain &Brain::operator=(const Brain &other)
 		this->ideas[i] = other.ideas[i];
 	}
 	index_of_thoughts = other.index_of_thoughts;
+	return *this;
 }
 
 void Brain::set_idea(std::string thought)
@@ -41,5 +44,8 @@ void Brain::set_idea(std::string thought)
 
 const std::string &Brain::get_idea(int index) const
 {
-	return ideas[index];
+	if ( index < 100 && index > 0)
+		return ideas[index];
+	else
+		return ideas[0];
 }
