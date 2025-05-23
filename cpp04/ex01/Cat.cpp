@@ -13,15 +13,15 @@ Cat::Cat()
 }
 Cat::~Cat()
 {
-	std::cout << type << " is being destroyed." << std::endl;
 	delete cat_brain;
+	std::cout << type << " is being destroyed." << std::endl;
 }
 
 Cat::Cat(const Cat &other) : Animal(other)
 {
 	std::cout << "Cat copy constructor." << std::endl;
 	cat_brain = new Brain;
-	cat_brain = other.cat_brain;
+	*(cat_brain) = *(other.cat_brain);
 }
 
 Cat &Cat::operator=(const Cat &other)
@@ -30,7 +30,7 @@ Cat &Cat::operator=(const Cat &other)
 	if (this == &other)
 		return *this;
 	type = other.type;
-	cat_brain = other.cat_brain;
+	*(cat_brain) = *(other.cat_brain);
 	return *this;
 }
 

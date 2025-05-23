@@ -13,15 +13,15 @@ Dog::Dog()
 }
 Dog::~Dog()
 {
-	std::cout << type << " is being destroyed." << std::endl;
 	delete dog_brain;
+	std::cout << type << " is being destroyed." << std::endl;
 }
 
 Dog::Dog(const Dog &other) : Animal(other)
 {
 	std::cout << "Dog copy constructor." << std::endl;
 	dog_brain = new Brain;
-	dog_brain = other.dog_brain;
+	*(dog_brain) = *(other.dog_brain);
 }
 
 Dog &Dog::operator=(const Dog &other)
@@ -29,7 +29,7 @@ Dog &Dog::operator=(const Dog &other)
 	std::cout << "Dog copy assignement operator." << std::endl;
 	if (this == &other)
 		return *this;
-	dog_brain = other.dog_brain;
+	*dog_brain = *(other.dog_brain);
 	type = other.type;
 	return *this;
 }

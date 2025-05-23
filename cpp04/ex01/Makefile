@@ -1,7 +1,7 @@
 NAME=Animals
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-FLAGS += -fsanitize=address
+FLAGS += -fsanitize=address -g
 
 FILES= Animal.cpp Dog.cpp WrongAnimal.cpp Cat.cpp main.cpp WrongCat.cpp Brain.cpp
 
