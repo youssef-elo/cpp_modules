@@ -15,6 +15,11 @@ void fill_cat_brain(Cat &cat, std::string str)
 
 int main()
 {
+	const Animal *first_dog = new Dog();
+	const Animal *first_cat = new Cat();
+	delete first_dog; // should not create a leak
+	delete first_cat;
+
 	Animal *arr[6];
 
 	std::cout << std::endl;
@@ -30,12 +35,15 @@ int main()
 		fill_cat_brain(*((Cat *)(arr[i])), "Meow Meow");
 	}
 	std::cout << std::endl;
+
 	for(int i = 0; i < 3; i++)
 		std::cout << ((Dog *)(*arr))->get_idea(i) << std::endl;
 	std::cout << std::endl;
+
 	for(int i = 0; i < 3; i++)
 		std::cout << ((Cat *)(*(arr + 3)))->get_idea(i) << std::endl;
 	std::cout << std::endl;
+
 	for (int i = 0; i < 6; i++)
 		delete (arr[i]);
 	std::cout << std::endl;

@@ -1,0 +1,26 @@
+NAME=Animals
+
+FLAGS= -Wall -Werror -Wextra -std=c++98
+FLAGS += -fsanitize=address -g
+
+FILES= AAnimal.cpp Dog.cpp WrongAnimal.cpp Cat.cpp main.cpp WrongCat.cpp Brain.cpp
+
+OFILES= $(FILES:.cpp=.o)
+
+INCLUDES = AAnimal.hpp Dog.hpp WrongCat.hpp Cat.hpp WrongAnimal.hpp Brain.hpp
+
+all : $(NAME)
+
+$(NAME) : $(OFILES)
+	c++ $(FLAGS) $(OFILES) -o $(NAME)
+
+%.o : %.cpp $(INCLUDES)
+	c++ $(FLAGS) -c $< -o $@
+
+clean :
+	rm -rf $(OFILES)
+
+fclean : clean
+	rm -rf $(NAME)
+
+re : fclean all
