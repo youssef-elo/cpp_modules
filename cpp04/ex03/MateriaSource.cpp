@@ -15,7 +15,6 @@ MateriaSource::MateriaSource(const MateriaSource &other) {
 		{
 			materials[i] = other.materials[i]->clone();
 		}
-		types[i] = other.types[i];
 	}
 	index = other.index;
 }
@@ -32,7 +31,6 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &other)
 			materials[i] = other.materials[i]->clone();
 		else 
 			materials[i] = NULL;
-		types[i] = other.types[i];
 	}
 	index = other.index;
 	return *this;
@@ -51,16 +49,16 @@ void MateriaSource::learnMateria(AMateria *m)
 {
 	if ( materials[index] )
 		delete materials[index];
-	materials[index] = m->clone();
-	types[index] = m->getType();
+	materials[index] = m;
+	index = (index + 1) % 4;
 }
 
 AMateria *MateriaSource::createMateria(std::string const &type)
 {
-	for ( int i =0; i < 4; i++)
+	for ( int i = 0; i < 4; i++)
 	{
-		if (types[i] == type)
-			return materials[i]->clone();
+		if (materials[i] && (materials[i]->getType() == type))
+			return (materials[i]->clone());
 	}
 	return 0;
 }

@@ -14,7 +14,9 @@ AMateria &AMateria::operator=(const AMateria &other)
 	return *this;
 }
 
-AMateria::AMateria(std::string const &type) : type(type) {}
+AMateria::AMateria(std::string const &type) {
+	this->type = type;
+}
 
 std::string const &AMateria::getType() const
 {

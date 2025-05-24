@@ -1,13 +1,15 @@
 #include "Character.hpp"
 
-void Character::keep_add(AMateria *removed)
+garbage* Character::head = NULL;
+
+void Character::keep_add(AMateria *keep)
 {
 	garbage *tmp;
 
 	if ( head == NULL)
 	{
 		head = new garbage;
-		head->add = removed;
+		head->add = keep;
 		head->next = NULL;
 	}
 	else
@@ -19,7 +21,7 @@ void Character::keep_add(AMateria *removed)
 		}
 		tmp->next = new garbage;
 		tmp = tmp->next;
-		tmp->add = removed;
+		tmp->add = keep;
 		tmp->next = NULL;
 	}
 }
@@ -37,7 +39,11 @@ void Character::equip(AMateria *m)
 	for ( int i = 0; i < 4; i++)
 	{
 		if (items[i] == NULL)
-			items[i] = m;
+		{
+			std::cout << i << std::endl;
+			items[i] = m->clone();
+			return ;
+		}
 	}
 }
 
@@ -71,7 +77,7 @@ Character::~Character()
 	garbage *tmp;
 	for ( int i = 0; i < 4; i++)
 	{
-		if ( items[i] != NULL)
+		if (items[i])
 			delete items[i];
 	}
 	while(head)

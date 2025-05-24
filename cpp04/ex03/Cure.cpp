@@ -1,6 +1,6 @@
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria("ice"){}
+Cure::Cure() : AMateria("cure"){}
 
 Cure::~Cure()
 {
@@ -16,7 +16,7 @@ Cure &Cure::operator=(const Cure &other)
 
 AMateria* Cure::clone() const
 {
-	return new Cure(*this);
+	return (new Cure(*this));
 }
 
 void Cure::use(ICharacter &target)

@@ -8,7 +8,7 @@ class MateriaSource : public IMateriaSource {
 	private: 
 		int index;
 		AMateria *materials[4];
-		std::string types[4];
+		// std::string types[4];
 	public:
 		MateriaSource();
 		MateriaSource(const MateriaSource& other);
