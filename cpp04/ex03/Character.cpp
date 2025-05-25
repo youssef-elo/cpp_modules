@@ -40,8 +40,7 @@ void Character::equip(AMateria *m)
 	{
 		if (items[i] == NULL)
 		{
-			std::cout << i << std::endl;
-			items[i] = m->clone();
+			items[i] = m;
 			return ;
 		}
 	}
@@ -75,17 +74,19 @@ Character::Character(std::string name_arg)
 Character::~Character()
 {
 	garbage *tmp;
-	for ( int i = 0; i < 4; i++)
-	{
-		if (items[i])
-			delete items[i];
-	}
+
+	std::cout << "destroying character " << name << std::endl;
 	while(head)
 	{
 		tmp = head->next;
 		delete head->add;
 		delete head;
 		head = tmp;
+	}
+	for ( int i = 0; i < 4; i++)
+	{
+		if (items[i])
+			delete items[i];
 	}
 }
 
@@ -105,7 +106,7 @@ Character &Character::operator=(const Character &other)
 	name = other.name;
 	for ( int i =0 ; i < 4; i++)
 	{
-		items[i] = other.items[i] != NULL ? other.items[i]->clone() : NULL;
+		items[i] = (other.items[i] != NULL ? other.items[i]->clone() : NULL);
 	}
 	return *this;
 }

@@ -1,7 +1,7 @@
 #include "AMateria.hpp"
 
 AMateria::~AMateria(){
-	std::cout << "destroying material" << type << std::endl;
+	std::cout << "destroying material " << type << std::endl;
 }
 
 AMateria::AMateria(const AMateria &other) : type(other.type) {}
