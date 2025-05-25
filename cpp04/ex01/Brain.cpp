@@ -4,8 +4,6 @@
 Brain::Brain()
 {
 	index_of_thoughts = 0;
-	for ( int i = 0 ; i < 100; i++)
-		ideas[i] = "default";
 	std::cout << "Brain constructor" << std::endl;
 }
 

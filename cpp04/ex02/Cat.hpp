@@ -10,7 +10,7 @@ class Cat : public AAnimal
 		Brain *cat_brain;
 	public:
 		Cat();
-		virtual ~Cat();
+		~Cat();
 		Cat(const Cat& other);
 		Cat& operator=(const Cat& other);
 		void makeSound() const;

@@ -30,6 +30,7 @@ int main()
 	std::cout << wi->getType() << " " << std::endl;
 	std::cout << std::endl;
 	wi->makeSound();
+	wmeta->makeSound();
 	std::cout << std::endl;
 	delete wi;
 	delete wmeta;
