@@ -1,7 +1,7 @@
 NAME=interfaces
 
 FLAGS=  -std=c++98
-# FLAGS= -Wall -Werror -Wextra -std=c++98
+FLAGS= -Wall -Werror -Wextra -std=c++98
 FLAGS += -fsanitize=address -g
 
 FILES= main.cpp AMateria.cpp   Cure.cpp  MateriaSource.cpp Character.cpp  Ice.cpp
