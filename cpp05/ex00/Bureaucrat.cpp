@@ -41,6 +41,7 @@ Bureaucrat& Bureaucrat::operator--(int)
 		throw Bureaucrat::GradeTooLowException("Grade is out of lower range.");
 	}
 	grade++;
+	return *this;
 }
 Bureaucrat& Bureaucrat::operator++(int)
 {
@@ -49,6 +50,7 @@ Bureaucrat& Bureaucrat::operator++(int)
 		throw Bureaucrat::GradeTooHighException("Grade is out of upper range.");
 	}
 	grade--;
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& other)
