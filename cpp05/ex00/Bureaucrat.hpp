@@ -16,6 +16,7 @@ class Bureaucrat
 			private:
 				std::string error_message;
 			public:
+				~GradeTooHighException() throw();
 				GradeTooHighException(std::string error_arg);
 				const char *what() const throw();
 		};
@@ -25,8 +26,9 @@ class Bureaucrat
 			private:
 				std::string error_message;
 			public:
-				GradeTooLowException(std::string error_arg);
-				const char *what() const throw();
+			~GradeTooLowException() throw();
+			GradeTooLowException(std::string error_arg);
+			const char *what() const throw();
 		};
 
 		~Bureaucrat();
@@ -35,9 +37,11 @@ class Bureaucrat
 		Bureaucrat(const std::string name_arg, int grade_arg);
 
 		int getGrade() const;
-		Bureaucrat &operator++(int);
-		Bureaucrat &operator--(int);
+		Bureaucrat &operator++();
+		Bureaucrat &operator--();
 		const std::string &getName() const;
 };
+
+std::ostream& operator<<(std::ostream& out, const Bureaucrat& other);
 
 #endif
