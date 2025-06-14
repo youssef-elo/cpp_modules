@@ -1,13 +1,13 @@
-NAME=exception
+NAME=form
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
 # FLAGS += -fsanitize=address -g
 
-FILES= Bureaucrat.cpp main.cpp
+FILES= Bureaucrat.cpp main.cpp Form.cpp
 
 OFILES= $(FILES:.cpp=.o)
 
-INCLUDES = Bureaucrat.hpp
+INCLUDES = Bureaucrat.hpp Form.hpp
 
 all : $(NAME)
 

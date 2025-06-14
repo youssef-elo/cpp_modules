@@ -5,8 +5,9 @@ int main()
 {
 	Bureaucrat *subject;
 
-	try{
-		subject = new Bureaucrat("simo", 3);
+	try
+	{
+		subject = new Bureaucrat("bureaucrat", 150);
 	}
 	catch (std::exception& ex)
 	{
@@ -17,14 +18,13 @@ int main()
 	try
 	{
 		--(*subject);
-		int a = 0;
-		if (a)
-			a=0;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << ex.what() << std::endl;
-	}`
+		delete subject;
+		return 1;
+	}
 	std::cout << (*subject) << std::endl;
 	delete subject;
 }
