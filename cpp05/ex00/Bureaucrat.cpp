@@ -9,7 +9,6 @@ Bureaucrat::Bureaucrat(const std::string& name_arg, int grade_arg) : name(name_a
 		throw Bureaucrat::GradeTooLowException();
 }
 
-
 Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name) , grade(other.grade) {}
 
 Bureaucrat &Bureaucrat::operator=(Bureaucrat &other)

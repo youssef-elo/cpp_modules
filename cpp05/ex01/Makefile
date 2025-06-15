@@ -1,7 +1,7 @@
 NAME=form
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-# FLAGS += -fsanitize=address -g
+FLAGS += -fsanitize=address -g
 
 FILES= Bureaucrat.cpp main.cpp Form.cpp
 
