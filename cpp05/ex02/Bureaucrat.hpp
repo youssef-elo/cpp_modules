@@ -5,7 +5,7 @@
 #include <iostream>
 #include "AForm.hpp"
 
-class Form;
+class AForm;
 class Bureaucrat
 {
 	private:
@@ -31,9 +31,10 @@ class Bureaucrat
 		Bureaucrat(const std::string& name_arg, int grade_arg);
 
 		int getGrade() const;
+		void executeForm(AForm const &form);
 		Bureaucrat &operator++();
 		Bureaucrat &operator--();
-		void signForm( Form& form);
+		void signForm( AForm& form);
 		const std::string &getName() const;
 };
 
