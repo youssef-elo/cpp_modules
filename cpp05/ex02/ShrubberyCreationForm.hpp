@@ -8,14 +8,14 @@ class ShrubberyCreationForm : public AForm
 {
 	private:
 		std::string target;
+
 	public:
-		void execute(Bureaucrat const & executor) const;
-
 		~ShrubberyCreationForm();
-		ShrubberyCreationForm( std::string target_arg);
-		ShrubberyCreationForm(const ShrubberyCreationForm& other);
-		ShrubberyCreationForm& operator=( const ShrubberyCreationForm& other);
-};
+		ShrubberyCreationForm(std::string target_arg);
+		ShrubberyCreationForm(const ShrubberyCreationForm &other);
+		ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
 
+		void execute(Bureaucrat const &executor) const;
+};
 
 #endif

@@ -7,7 +7,7 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 	if (executor.getGrade() > getExecuteGrade())
 		throw GradeTooLowException();
 
-	std::ofstream file_target(target.c_str());
+	std::ofstream file_target((target + "_shrubbery").c_str());
 
 	if ( !file_target )
 		throw std::runtime_error("cannot open file for writing.");
@@ -64,7 +64,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target_arg) :
-	AForm("ShrubberyCreationForm", 25, 5),
+	AForm("ShrubberyCreationForm", 145, 137),
 	target(target_arg) {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other) :

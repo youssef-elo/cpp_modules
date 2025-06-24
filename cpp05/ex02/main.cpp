@@ -6,10 +6,26 @@
 
 int main()
 {
-	PresidentialPardonForm a("k");
-	RobotomyRequestForm b("k");
-	ShrubberyCreationForm c("k");
+	PresidentialPardonForm a("Criminal");
+	RobotomyRequestForm b("83-Dc");
+	ShrubberyCreationForm c("tree");
+	Bureaucrat t("top-bureaucrat", 5);
 
-	Bureaucrat t("hh", 1);
-	c.execute(t);
+	t.executeForm(a);
+	t.executeForm(b);
+	t.executeForm(c);
+	std::cout << std::endl << std::endl;
+	
+	t.signForm(a);
+	t.signForm(b);
+	t.signForm(c);
+	std::cout << std::endl << std::endl;
+	
+	t.executeForm(a);
+	std::cout << std::endl;
+	t.executeForm(b);
+	std::cout << std::endl;
+	t.executeForm(c);
+
+	std::cout << std::endl << std::endl;
 }
