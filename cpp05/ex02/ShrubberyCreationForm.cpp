@@ -67,6 +67,10 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target_arg) :
 	AForm("ShrubberyCreationForm", 145, 137),
 	target(target_arg) {}
 
+ShrubberyCreationForm::ShrubberyCreationForm() :
+	AForm("ShrubberyCreationForm", 145, 137),
+	target("Default target") {}
+
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other) :
 	AForm(other),
 	target(other.target) {}

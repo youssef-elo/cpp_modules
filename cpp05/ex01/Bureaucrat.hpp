@@ -25,6 +25,7 @@ class Bureaucrat
 				const char *what() const throw();
 		};
 
+		Bureaucrat();
 		~Bureaucrat();
 		Bureaucrat(const Bureaucrat &other);
 		Bureaucrat &operator=(Bureaucrat &other);

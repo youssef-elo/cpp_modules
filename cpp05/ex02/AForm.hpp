@@ -14,6 +14,7 @@ class AForm {
 		bool sign_;
 
 	public:
+		AForm();
 		virtual ~AForm();
 		AForm(const AForm& other);
 		AForm& operator=(const AForm& other);

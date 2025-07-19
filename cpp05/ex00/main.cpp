@@ -7,7 +7,7 @@ int main()
 
 	try
 	{
-		subject = new Bureaucrat("bureaucrat", 150);
+		subject = new Bureaucrat("bureaucrat", 149);
 	}
 	catch (std::exception& ex)
 	{
@@ -23,7 +23,7 @@ int main()
 	{
 		std::cout << ex.what() << std::endl;
 		delete subject;
-		return 1;
+		return 2;
 	}
 	std::cout << (*subject) << std::endl;
 	delete subject;

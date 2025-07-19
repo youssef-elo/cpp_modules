@@ -4,6 +4,10 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target_arg):
 	AForm("PresidentialPardonForm", 25, 5),
 	target(target_arg){}
 
+PresidentialPardonForm::PresidentialPardonForm():
+	AForm("PresidentialPardonForm", 25, 5),
+	target("Default target"){}
+
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other) : 
 	AForm(other),
 	target(other.target) {}

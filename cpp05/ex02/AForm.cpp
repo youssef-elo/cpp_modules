@@ -44,7 +44,23 @@ AForm &AForm::operator=(const AForm &other)
 	return *this;
 }
 
-AForm::AForm(const std::string &name, int sign_grade, int execute_grade) : name_(name), sign_grade_(sign_grade), execute_grade_(execute_grade), sign_(false){}
+AForm::AForm(const std::string &name, int sign_grade, int execute_grade) : 
+	name_(name), 
+	sign_grade_(sign_grade),
+	execute_grade_(execute_grade),
+	sign_(false)
+{
+	if (sign_grade_ < 1 || execute_grade_ < 1)
+		throw AForm::GradeTooHighException();
+	if (sign_grade_ > 150 || execute_grade_ > 150)
+		throw AForm::GradeTooLowException();
+}
+
+AForm::AForm() : name_("Default Form"), 
+			sign_grade_(150), 
+			execute_grade_(150), 
+			sign_(false) {}
+
 
 std::ostream& operator<<(std::ostream& out, const AForm& other)
 {

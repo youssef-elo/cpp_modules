@@ -8,10 +8,18 @@
 int main()
 {
 	Intern modernslave;
+	Bureaucrat t("top-bureaucrat", 1);
 	AForm *a = modernslave.makeForm("presidential pardon", "most wanted");
 	AForm *b = modernslave.makeForm("robotomy request", "C80-47");
 	AForm *c = modernslave.makeForm("shrubbery creation", "tree");
-	Bureaucrat t("top-bureaucrat", 1);
+
+	if ( !a || !b || !c)
+	{
+		delete a; 
+		delete b;
+		delete c;
+		return 1;
+	}
 
 	t.executeForm(*a);
 	t.executeForm(*b);

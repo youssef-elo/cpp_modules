@@ -12,6 +12,10 @@ class Intern {
 		AForm *makePardon( std::string target );
 		AForm *makeRobot( std::string target );
 	public:
+		Intern();
+		~Intern();
+		Intern(const Intern& other);
+		Intern& operator=(const Intern& other);
 		AForm *makeForm( std::string name, std::string target );
 	
 };

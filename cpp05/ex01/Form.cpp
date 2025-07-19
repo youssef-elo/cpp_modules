@@ -1,6 +1,5 @@
 #include "Form.hpp"
 
-
 const std::string& Form::getName() const
 {
 	return name_;
@@ -29,12 +28,6 @@ void Form::beSigned(const Bureaucrat& signer)
 		sign_ = true;
 }
 
-Form::~Form()
-{
-	std::cout << "Form: " << name_ << " is being destructed" << std::endl;
-}
-
-Form::Form(const Form &other): name_(other.name_) , sign_grade_(other.sign_grade_), execute_grade_(other.execute_grade_), sign_(other.sign_){}
 
 Form &Form::operator=(const Form &other)
 {
@@ -44,7 +37,29 @@ Form &Form::operator=(const Form &other)
 	return *this;
 }
 
-Form::Form(const std::string &name, int sign_grade, int execute_grade) : name_(name), sign_grade_(sign_grade), execute_grade_(execute_grade), sign_(false){}
+Form::~Form()
+{
+	std::cout << "Form: " << name_ << " is being destructed" << std::endl;
+}
+
+Form::Form() : name_("Default Form"), 
+			sign_grade_(150), 
+			execute_grade_(150), 
+			sign_(false) {}
+
+Form::Form(const Form &other): name_(other.name_) , sign_grade_(other.sign_grade_), execute_grade_(other.execute_grade_), sign_(other.sign_){}
+
+Form::Form(const std::string &name, int sign_grade, int execute_grade) : 
+			name_(name), 
+			sign_grade_(sign_grade), 
+			execute_grade_(execute_grade), 
+			sign_(false)
+{
+	if ( sign_grade_ < 1 || execute_grade_ < 1)
+		throw Form::GradeTooHighException();
+	if ( sign_grade_ > 150 || execute_grade_ > 150)
+		throw Form::GradeTooLowException();
+}
 
 std::ostream& operator<<(std::ostream& out, const Form& other)
 {

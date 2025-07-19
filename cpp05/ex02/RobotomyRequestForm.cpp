@@ -1,5 +1,9 @@
 #include "RobotomyRequestForm.hpp"
 
+RobotomyRequestForm::RobotomyRequestForm() : 
+	AForm("RobotomyRequestForm", 72, 45),
+	target("Default target") {}
+
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	static unsigned int success;

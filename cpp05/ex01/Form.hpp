@@ -14,6 +14,7 @@ class Form {
 		bool sign_;
 
 	public:
+		Form();
 		~Form();
 		Form(const Form& other);
 		Form& operator=(const Form& other);
@@ -41,4 +42,4 @@ class Form {
 
 std::ostream& operator<<(std::ostream& out, const Form& other);
 
-#endif
+#endif 

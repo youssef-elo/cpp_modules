@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat() : name("Default Bureaucrat"), grade(150) {}
 
 Bureaucrat::Bureaucrat(const std::string& name_arg, int grade_arg) : name(name_arg) , grade(grade_arg)
 {
@@ -8,7 +9,6 @@ Bureaucrat::Bureaucrat(const std::string& name_arg, int grade_arg) : name(name_a
 	if ( grade > 150)
 		throw Bureaucrat::GradeTooLowException();
 }
-
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.name) , grade(other.grade) {}
 

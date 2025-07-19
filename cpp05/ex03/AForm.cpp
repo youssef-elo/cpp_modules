@@ -1,6 +1,5 @@
 #include "AForm.hpp"
 
-
 const std::string& AForm::getName() const
 {
 	return name_;
