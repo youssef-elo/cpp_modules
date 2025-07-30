@@ -1,57 +1,17 @@
-#ifndef SCALARCONVERTER
-# define SCALARCONVERTER
+#include "ScalarConverter.hpp"
 
-#include <string>
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <cmath>
-
-enum TYPE
+TYPE parse(std::string arg)
 {
-	CHARACHTER,
-	INVALID,
-	VALID,
-	EDGES
-};
-
-class ScalarConverter
-{
-	private:
-		static TYPE parse(std::string arg);
-		ScalarConverter();
-		~ScalarConverter();
-		ScalarConverter(const ScalarConverter& other);
-		ScalarConverter& operator=(const ScalarConverter& other);
-	public :
-		static void convert(std::string arg);
-
-};
-ScalarConverter::ScalarConverter(){}
-
-ScalarConverter::~ScalarConverter(){}
-
-ScalarConverter::ScalarConverter(const ScalarConverter& other)
-{
-	(void)other;
-}
-ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
-{
-	(void)other;
-	return *this;
-}
-
-TYPE ScalarConverter::parse(std::string arg)
-{
-	if ( arg == "nan" || arg == "-inf" || arg == "+inf" || arg == "-inff" || arg == "+inff" || arg == "nanf")
-		return EDGES;
-	if (arg.length() == 1 && !isdigit(arg[0]))
-		return CHARACHTER;
 	int f = -1;
 	int d = -1;
 	int f_count = 0;
 	int d_count = 0;
 	int n = arg.length();
+
+	if ( arg == "nan" || arg == "-inf" || arg == "+inf" || arg == "-inff" || arg == "+inff" || arg == "nanf")
+		return EDGES;
+	if (arg.length() == 1 && !isdigit(arg[0]))
+		return CHARACHTER;
 	for ( size_t i = 0; i < arg.length(); i++)
 	{
 		if (arg[i] == '.')
@@ -67,7 +27,7 @@ TYPE ScalarConverter::parse(std::string arg)
 		else if (!isdigit(arg[i]))
 			return INVALID;
 	}
-	if ( d_count > 1 || f_count > 1 ||  ( f != -1 && f != n - 1 ))
+	if ( n == 0 ||  d_count > 1 || f_count > 1 ||  ( f != -1 && f != n - 1 ))
 		return INVALID;
 	if ( d_count && !f_count)
 		return VALID;
@@ -78,7 +38,7 @@ TYPE ScalarConverter::parse(std::string arg)
 	return INVALID;
 }
 
-void FromCharacter( std::string arg)
+void FromCharacter( std::string arg )
 {
 	int i;
 	char c;
@@ -96,6 +56,7 @@ void FromCharacter( std::string arg)
 	std::cout << "int: " << i << std::endl;
 	std::cout << std::setprecision(1) << "float: " << f << "f" << std::endl;
 	std::cout << std::setprecision(1) << "double: " << d << std::endl;
+	std::cout << std::setprecision(6);
 }
 
 void FromEdges( std::string arg)
@@ -120,9 +81,11 @@ void FromEdges( std::string arg)
 void From_int_float_double( std::string arg )
 {
 	double d;
+	int precision = 0;
 
 	if (arg[arg.length() - 1] == 'f')
 		arg[arg.length() - 1] = 0;
+		
 	std::stringstream ss(arg);
 	ss >> d;
 	if ( d >= 0 && d <= 255)
@@ -141,33 +104,13 @@ void From_int_float_double( std::string arg )
 	else
 		std::cout << "int: impossible" << std::endl;
 	if ((arg.find(".") == std::string::npos) || (arg.find(".") == arg.length() - 1))
+	{
 		std::cout << std::setprecision(1);
+		precision = 1;
+	}
 	std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
 	std::cout << "double: " << d << std::endl;
+	if ( precision )
+		std::cout << std::setprecision(6);
+
 }
-
-void ScalarConverter::convert(std::string arg)
-{
-	TYPE ret = parse(arg);
-
-	if ( ret == INVALID)
-	{
-		std::cout << "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible" << std::endl;
-		return ;
-	}
-	std::cout << std::fixed << std::showpoint;
-	if ( ret == CHARACHTER)
-	{
-		FromCharacter(arg);
-	}
-	else if ( ret == EDGES)
-	{
-		FromEdges(arg);
-	}
-	else if ( ret == VALID)
-	{
-		From_int_float_double(arg);
-	}
-}
-
-#endif
