@@ -12,7 +12,10 @@ TYPE parse(std::string arg)
 		return EDGES;
 	if (arg.length() == 1 && !isdigit(arg[0]))
 		return CHARACHTER;
-	for ( size_t i = 0; i < arg.length(); i++)
+	size_t i = 0;
+	if ( arg[i] == '-' || arg[i] == '+')
+		i++;
+	for ( ; i < arg.length(); i++)
 	{
 		if (arg[i] == '.')
 		{
@@ -97,7 +100,7 @@ void From_int_float_double( std::string arg )
 	}
 	else 
 		std::cout << "char: impossible" << std::endl;
-	if (std::isfinite(d) && d < INT_MAX && d > INT_MIN)
+	if (std::isfinite(d) && d <= INT_MAX && d >= INT_MIN)
 	{
 		std::cout << "int: " << static_cast<int>(d) << std::endl;
 	}
