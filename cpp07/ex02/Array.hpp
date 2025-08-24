@@ -15,7 +15,8 @@ class Array
 		Array(unsigned int n);
 		Array(const Array& other);
 		Array& operator=(const Array& other);
-		TYPE& operator[](unsigned int index) const;
+		TYPE& operator[](unsigned int index);
+		const TYPE& operator[](unsigned int index) const;
 
 		unsigned int size() const;
 };
@@ -31,7 +32,7 @@ template < typename TYPE>
 Array<TYPE>::Array(unsigned int n)
 {
 	array_size = n;
-	arr = new TYPE[n]();	
+	arr = new TYPE[n]();
 }
 
 template < typename TYPE>
@@ -45,12 +46,14 @@ template < typename TYPE>
 Array<TYPE>::Array(const Array& other)
 {
 	array_size = other.array_size;
+
 	try
 	{
 		arr = new TYPE[array_size]();
 	}
 	catch( const std::exception& ex)
 	{
+
 		throw ;
 	}
 	for ( unsigned int i = 0; i < array_size; i++)
@@ -61,7 +64,15 @@ Array<TYPE>::Array(const Array& other)
 
 
 template < typename TYPE>
-TYPE& Array<TYPE>::operator[](unsigned int index) const
+const TYPE& Array<TYPE>::operator[](unsigned int index) const
+{
+	if ( index < 0 || index >= array_size)
+		throw std::out_of_range("Index requested is out of bounds");
+	return arr[index];
+}
+
+template < typename TYPE>
+TYPE& Array<TYPE>::operator[](unsigned int index) 
 {
 	if ( index < 0 || index >= array_size)
 		throw std::out_of_range("Index requested is out of bounds");
@@ -82,15 +93,6 @@ Array<TYPE>& Array<TYPE>::operator=(const Array& other)
 	}
 	return *this;
 }
-
-template <typename TYPE>
-std::ostream& operator<<( std::ostream& out, const Array<TYPE>& other)
-{
-	for (unsigned int i = 0 ; i < other.size(); i++)
-		out << other[i] << std::endl;
-	return out;
-}
-
 
 template < typename TYPE>
 unsigned int Array<TYPE>::size() const
