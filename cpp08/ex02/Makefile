@@ -7,7 +7,7 @@ FILES= main.cpp
 
 OFILES= $(FILES:.cpp=.o)
 
-INCLUDES = whatever.hpp
+INCLUDES = MutantStack.hpp
 
 all : $(NAME)
 

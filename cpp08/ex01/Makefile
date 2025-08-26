@@ -1,6 +1,6 @@
 NAME=templates
 
-FLAGS= -Wall -Werror -Wextra -std=c++11
+FLAGS= -Wall -Werror -Wextra -std=c++98
 # FLAGS += -fsanitize=address -g
 
 FILES= Span.cpp main.cpp
