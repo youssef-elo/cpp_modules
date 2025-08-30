@@ -1,10 +1,8 @@
 #include "Span.hpp"
 #include <vector>
 
-
 int main()
 {
-
 	std::cout << "Subect's test :" << std::endl;
 	Span sp = Span(5);
 	sp.addNumber(6);

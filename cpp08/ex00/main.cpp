@@ -22,6 +22,7 @@ int main()
 	if ( it != vec.end())
 		std::cout << "Element " << *it << " was found at index " << (it - vec.begin()) << std::endl;
 	it = vec.end();
+
 	look_for = -10;
 	try
 	{
