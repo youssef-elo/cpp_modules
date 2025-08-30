@@ -1,6 +1,6 @@
 NAME=templates
 
-FLAGS= -Wall -Werror -Wextra -std=c++98
+FLAGS= -Wall -Werror -Wextra -E -std=c++98
 # FLAGS += -fsanitize=address -g
 
 FILES= main.cpp

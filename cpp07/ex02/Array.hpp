@@ -39,7 +39,7 @@ template < typename TYPE>
 Array<TYPE>::Array()
 {
 	array_size = 0;
-	arr = new TYPE[0];
+	arr = new TYPE[0]();
 }
 
 template < typename TYPE>
@@ -47,15 +47,7 @@ Array<TYPE>::Array(const Array& other)
 {
 	array_size = other.array_size;
 
-	try
-	{
-		arr = new TYPE[array_size]();
-	}
-	catch( const std::exception& ex)
-	{
-
-		throw ;
-	}
+	arr = new TYPE[array_size]();
 	for ( unsigned int i = 0; i < array_size; i++)
 	{
 		arr[i] = other.arr[i];
@@ -86,7 +78,7 @@ Array<TYPE>& Array<TYPE>::operator=(const Array& other)
 		return *this;
 	delete arr;
 	array_size = other.array_size;
-	arr = new TYPE[array_size];
+	arr = new TYPE[array_size]();
 	for (unsigned int i = 0; i < array_size; i++)
 	{
 		arr[i] = other.arr[i];
