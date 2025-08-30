@@ -1,5 +1,5 @@
-#ifndef EASYFIND
-#define EASYFIND
+#ifndef EASYFIND_HPP
+#define EASYFIND_HPP
 
 #include <algorithm>
 
@@ -12,4 +12,4 @@ typename Container::iterator easyfind(Container& con, int to_find)
 	return it;
 }
 
-#endif 
+#endif
