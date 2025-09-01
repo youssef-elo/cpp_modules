@@ -1,7 +1,9 @@
 #include "BitcoinExchange.hpp"
 
-int main()
+int main(int ac , char **av)
 {
-	std::cout << "hello";
-
+	if ( ac != 2)
+		return 1;
+	BitcoinExchange test;
+	test.read_file(av[1]);
 }
