@@ -15,7 +15,7 @@ class BitcoinExchange {
 			LARGE
 		};
 		std::map<std::string, double> database;
-		typedef std::map<std::string, double> database_it;
+		typedef std::map<std::string, double>::iterator database_it;
 		bool check_date( const std::string& date );
 		void digest_input_line( std::string& line );
 		void print_err( error_code code,  const std::string& line );
@@ -50,6 +50,7 @@ bool BitcoinExchange::read_file( const std::string& file_name)
 		digest_input_line(buffer);
 		line++;
 	}
+	input_file.close();
 	return true;
 }
 
@@ -88,6 +89,7 @@ BitcoinExchange::BitcoinExchange()
 			throw std::runtime_error(std::string("Invalid line in data.csv file ") + std::to_string(line));
 		line++;
 	}
+	data_stream.close();
 }
 
 bool is_leap( int year )
@@ -175,8 +177,7 @@ void BitcoinExchange::digest_input_line( std::string& line )
 	std::string date; 
 	std::string value;
 	double final_price;
-	double database_value;
-
+	database_it database_value;
 
 	if ( line.length() < 14)
 		return print_err(BAD_INPUT, line);
@@ -202,8 +203,8 @@ void BitcoinExchange::digest_input_line( std::string& line )
 	{
 		std::cerr << "Error: Database is empty cannot retrieve any price." << std::endl;
 	}
-	database_value = std::lower_bound(database.begin(), database.end(), (double) f_value);
-	final_price = database_value * f_value;
+	database_value = database.lower_bound(date);
+	final_price = (database_value->second) * f_value;
 	std::cout << date << " => " << f_value << " = " << final_price << std::endl;
 }
 
