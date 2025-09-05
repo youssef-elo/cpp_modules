@@ -33,7 +33,7 @@ bool BitcoinExchange::read_file( const std::string& file_name)
 {
 	int line = 1;
 	std::string buffer;
-	std::ifstream input_file(file_name);
+	std::ifstream input_file(file_name.c_str());
 
 	if (!input_file.is_open())
 	{
@@ -86,7 +86,10 @@ BitcoinExchange::BitcoinExchange()
 			continue;
 		}
 		else if ( !check_database_line(buffer) )
-			throw std::runtime_error(std::string("Invalid line in data.csv file ") + std::to_string(line));
+		{
+			std::cerr << "Invalid line in data.csv file, line: " << line << std::endl;
+			throw std::runtime_error(std::string("Invalid line in data.csv file."));
+		}
 		line++;
 	}
 	data_stream.close();
@@ -204,8 +207,15 @@ void BitcoinExchange::digest_input_line( std::string& line )
 		std::cerr << "Error: Database is empty cannot retrieve any price." << std::endl;
 	}
 	database_value = database.lower_bound(date);
-	final_price = (database_value->second) * f_value;
-	std::cout << date << " => " << f_value << " = " << final_price << std::endl;
+	if ( database_value == database.begin() && database_value->second != f_value)
+	{
+		std::cerr << "Error: No record of the date, or a lower one in the database: " << line << std::endl;
+		return ;
+	}
+	if ( database_value == database.end())
+		--database_value;
+	final_price = database_value->second * f_value;
+	std::cout << std::fixed << date << " => " << f_value << " = " << final_price << std::endl;
 }
 
 #endif
