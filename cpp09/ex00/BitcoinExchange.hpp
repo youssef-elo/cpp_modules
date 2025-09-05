@@ -9,17 +9,21 @@
 
 class BitcoinExchange {
 	private:
+		std::map<std::string, double> database;
+		
+		typedef std::map<std::string, double>::iterator database_it;
 		enum error_code {
 			BAD_INPUT,
+			BAD_DATE,
 			NEGATIVE,
 			LARGE
 		};
-		std::map<std::string, double> database;
-		typedef std::map<std::string, double>::iterator database_it;
+		
 		bool check_date( const std::string& date );
 		void digest_input_line( std::string& line );
 		void print_err( error_code code,  const std::string& line );
 		bool check_database_line( const std::string& line );
+		
 	public:
 		BitcoinExchange();
 		~BitcoinExchange();
@@ -168,6 +172,8 @@ void BitcoinExchange::print_err( error_code code, const std::string& line )
 {
 	if ( code == BAD_INPUT )
 		std::cerr << "Error: bad_input => " << line << std::endl;
+	if ( code == BAD_DATE )
+		std::cerr << "Error: Bad date format required YYYY-MM-DD/dates must exist => " << line << std::endl;
 	if ( code == NEGATIVE )
 		std::cerr << "Error: not a positive number." << std::endl;
 	if ( code == LARGE )
@@ -192,7 +198,7 @@ void BitcoinExchange::digest_input_line( std::string& line )
 		return print_err(BAD_INPUT, line);
 	date = line.substr(0, seperator_position - 1 );
 	if ( !check_date(date))
-		return print_err(BAD_INPUT, line);
+		return print_err(BAD_DATE, line);
 	value  = line.substr(seperator_position + 2);
 	std::stringstream ss(value);
 	ss >> f_value;
@@ -202,6 +208,8 @@ void BitcoinExchange::digest_input_line( std::string& line )
 		return print_err(NEGATIVE, line);
 	if ( f_value > 1000 )
 		return print_err( LARGE, line);
+	if ( line.length() > 20)
+		return print_err(BAD_INPUT, line);
 	if ( database.size() == 0)
 	{
 		std::cerr << "Error: Database is empty cannot retrieve any price." << std::endl;
@@ -215,7 +223,7 @@ void BitcoinExchange::digest_input_line( std::string& line )
 	if ( database_value == database.end())
 		--database_value;
 	final_price = database_value->second * f_value;
-	std::cout << std::fixed << date << " => " << f_value << " = " << final_price << std::endl;
+	std::cout  << date << " => " << f_value << " = " << final_price << std::endl;
 }
 
 #endif
