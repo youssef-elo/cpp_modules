@@ -1,6 +1,6 @@
 #include "Span.hpp"
 
-int Span::longestSpan()
+unsigned long Span::longestSpan()
 {
 	if ( container.size() < 2)
 		throw std::runtime_error("Span doesnt have enough elements to calculate longest span");
@@ -8,17 +8,17 @@ int Span::longestSpan()
 	Span::iterator first = container.begin();
 	Span::iterator last = container.end();
 	last--;
-	return *last - *first;
+	return static_cast<unsigned long>(*last) - *first;
 }
-int Span::shortestSpan()
+unsigned long Span::shortestSpan()
 {
 	if ( container.size() < 2)
 		throw std::runtime_error("Span doesnt have enough elements to calculate shortest span");
 	
 	Span::iterator it = container.begin();
-	int prev = *it;
-	int current = 0;
-	int ret = *(++it) - prev;
+	unsigned long prev = *it;
+	unsigned long current = 0;
+	unsigned long ret = *(++it) - prev;
 	while ( it != container.end())
 	{
 		current = *it - prev;
@@ -39,6 +39,8 @@ void Span::addNumber(int nb)
 
 Span::Span(){}
 
+Span::~Span(){}
+
 Span::Span( unsigned int size ): span_size(size) {}
 
 Span::Span( const Span& other ) : span_size(other.span_size) , container(other.container){}
@@ -50,9 +52,4 @@ Span& Span::operator=( const Span& other )
 	container = other.container;
 	span_size = other.span_size;
 	return *this;
-}
-
-Span::~Span()
-{
-	std::cout << "Destroying Span object" << std::endl;
 }

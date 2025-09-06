@@ -21,7 +21,7 @@ int main()
 	std::cout << "\tlongest span : " << big_span.longestSpan() << std::endl
 			  << "\tshortest span : " << big_span.shortestSpan() << std::endl;
 
-	int inititalizer[] = {0, 1, 2, 3, -4,5, 6, 7,8, 900, 10};
+	int inititalizer[] = {0, 20, 2, -4,0, 6, 7,8, 900, 10};
 	std::vector<int> vec(inititalizer, inititalizer + (sizeof(inititalizer) / sizeof(inititalizer[0])));
 
 	Span spa(10);
@@ -67,5 +67,24 @@ int main()
 		std::cerr << e.what() << std::endl;
 	}
 	std::cout << std::endl;
+	{
+		Span over(3);
+		over.addNumber(2147483647);
+		over.addNumber(-2147483648);
+		std::cout << "Testing overflow of longest span and shortest span :" << std::endl;
+		std::cout << "\tShortest span : " << over.shortestSpan() << std::endl;
+		std::cout << "\tLongest span : " << over.longestSpan() << std::endl;
+		std::cout << std::endl;
+		try
+		{
+			std::cout << "Testing invalid insert iterators: " << std::endl;
+			over.insert(vec.end(), vec.begin());
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << "\tError: " << e.what() << '\n';
+		}
+		
+	}
 	return 0;
 }

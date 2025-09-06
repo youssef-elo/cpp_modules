@@ -21,7 +21,7 @@ class Array
 		unsigned int size() const;
 };
 
-template < typename TYPE>
+template < typename TYPE >
 Array<TYPE>::~Array()
 {
 	std::cout << "Destroying the array" << std::endl;
