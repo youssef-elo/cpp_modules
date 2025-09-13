@@ -5,6 +5,7 @@
 
 int main()
 {
+	MutantStack<int> copy;
 	{
 		MutantStack<int> mstack;
 		mstack.push(5);
@@ -25,6 +26,7 @@ int main()
 			std::cout << *it << std::endl;
 			++it;
 		}
+		copy = mstack;
 		std::cout << std::endl;
 		std::stack<int> s(mstack);
 		while (!s.empty())
@@ -56,6 +58,14 @@ int main()
 		{
 			std::cout << *it << std::endl;
 			++it;
+		}
+	}
+	{
+		std::cout << "Testing const iterators: "<< std::endl;
+		const MutantStack<int> constant_class(copy);
+		for ( MutantStack<int>::const_iterator it = constant_class.begin(); it < constant_class.end(); ++it )
+		{
+			std::cout << *it << std::endl;
 		}
 	}
 

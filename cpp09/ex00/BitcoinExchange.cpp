@@ -1,6 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-
 bool BitcoinExchange::read_file( const std::string& file_name)
 {
 	int line = 1;
@@ -25,7 +24,6 @@ bool BitcoinExchange::read_file( const std::string& file_name)
 	input_file.close();
 	return true;
 }
-
 
 BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& other )
 {
@@ -134,8 +132,6 @@ bool BitcoinExchange::check_database_line(const std::string& line )
 	return true;
 }
 
-
-
 void BitcoinExchange::print_err( error_code code, const std::string& line )
 {
 	if ( code == BAD_INPUT )
@@ -181,6 +177,7 @@ void BitcoinExchange::digest_input_line( std::string& line )
 	if ( database.size() == 0)
 	{
 		std::cerr << "Error: Database is empty cannot retrieve any price." << std::endl;
+		return ;
 	}
 	database_value = database.lower_bound(date);
 	if ( database_value == database.begin() && database_value->second != f_value)

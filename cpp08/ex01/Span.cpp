@@ -3,7 +3,7 @@
 unsigned long Span::longestSpan()
 {
 	if ( container.size() < 2)
-		throw std::runtime_error("Span doesnt have enough elements to calculate longest span");
+		throw std::runtime_error("Span doesnt have enough elements to calculate longest span.");
 	
 	Span::iterator first = container.begin();
 	Span::iterator last = container.end();
@@ -13,7 +13,7 @@ unsigned long Span::longestSpan()
 unsigned long Span::shortestSpan()
 {
 	if ( container.size() < 2)
-		throw std::runtime_error("Span doesnt have enough elements to calculate shortest span");
+		throw std::runtime_error("Span doesnt have enough elements to calculate shortest span.");
 	
 	Span::iterator it = container.begin();
 	unsigned long prev = *it;

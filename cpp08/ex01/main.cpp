@@ -84,7 +84,6 @@ int main()
 		{
 			std::cerr << "\tError: " << e.what() << '\n';
 		}
-		
 	}
 	return 0;
 }

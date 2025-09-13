@@ -1,4 +1,4 @@
-NAME=templates
+NAME=MutantStack
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
 # FLAGS += -fsanitize=address -g
