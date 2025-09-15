@@ -4,12 +4,14 @@
 #include <iostream>
 #include <stack>
 #include <sstream>
+#include <limits>
 
 class RPN {
+
 	private:
 		std::stack<long long> lifo;
-		long long make_operation(long long first, long long second, char operation);
 		bool is_operator( char c );
+		long long make_operation(long long first, long long second, char operation);
 
 	public:
 		RPN();

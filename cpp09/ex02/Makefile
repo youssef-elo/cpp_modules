@@ -1,13 +1,13 @@
-NAME=RPN
+NAME=PmergeMe
 
 FLAGS= -Wall -Werror -Wextra -std=c++98
-# FLAGS += -fsanitize=address -g
+FLAGS += -fsanitize=address -g
 
-FILES= main.cpp
+FILES= main.cpp PmergeMe.cpp
 
 OFILES= $(FILES:.cpp=.o)
 
-INCLUDES = easyfind.hpp
+INCLUDES = PmergeMe.hpp
 
 all : $(NAME)
 

@@ -75,6 +75,10 @@ long long RPN::calculate(std::string &expression)
 			first = lifo.top();
 			lifo.pop();
 			result = make_operation(first, second, buffer[0]);
+			if ( result > std::numeric_limits<int>::max())
+				throw std::range_error("Integer Overflow detected.");
+			if ( result < std::numeric_limits<int>::min())
+				throw std::range_error("Integer Underflow detected.");
 			lifo.push(result);
 		}
 		else
