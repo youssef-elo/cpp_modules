@@ -28,10 +28,10 @@ class PmergeMe {
 			}
 		}
 
-		void jacob_insertion(std::vector<int>& main_chain, std::vector<int>& pend_chain)
-		{
+		// void jacob_insertion(std::vector<int>& main_chain, std::vector<int>& pend_chain)
+		// {
 			
-		}
+		// }
 
 		void switch_units(std::vector<int>& nums, int first, int second, int unit_size)
 		{
@@ -100,12 +100,53 @@ class PmergeMe {
 				and since we already know that the main chain has b1 a1 a2 a3 then the index of the match is 3 which is the same as the jacob sthall number ,
 				this stays true for all elemnents if we ont push anything into the main chain , but since we are updating it with elements from the pend we have to adjust that wit ading to the bound 
 				how many elements we inserted
-				when inserting an element it could be supposed to be inserted above the bound by one meaning the bounf willb enow invalid so we need to move it back one place.
+				when inserting an element it could be supposed to be inserted above the bound by one meaning the bound willb now invalid so we need to move it back one place.
 			*/
-			
+			size_t previous_jacob = 1;
+			size_t current_jacob;
+			size_t number_of_insertions;
+			size_t inserted_count = 0;
+			size_t i = 0;
+			size_t on_bound = 0;
 
 
-			
+		// the element shoul dbe pushed at the edges of the units idiot!
+
+
+			// while ( pend.size() )
+			// {
+			// 	current_jacob = jacob_sequence[i];
+			// 	number_of_insertions = current_jacob - previous_jacob;
+			// 	if ( number_of_insertions > pend.size() )
+			// 		break;
+			// 	while ( number_of_insertions )
+			// 	{
+			// 		vec_iterator search_limit = main.begin() + (current_jacob + inserted_count + on_bound);
+			// 		vec_iterator insertion_it = std::upper_bound(main.begin(), search_limit, pend[number_of_insertions - 1]);
+			// 		if ( insertion_it == search_limit - 1)
+			// 			on_bound++;
+			// 		main.insert(insertion_it, pend[number_of_insertions - 1]);
+			// 		number_of_insertions--;
+			// 	}
+			// 	//remove all the element that were inserted from the main chain
+			// 	pend.erase(pend.begin(), pend.begin() + (current_jacob - previous_jacob));
+			// 	on_bound = 0;
+			// 	previous_jacob = current_jacob;
+			// 	i++;
+			// }
+			// if ( pend.size())
+			// {
+			// 	std::cout << "level " << unit_size << std::endl;
+			// 	for ( size_t i = 0; i < main.size(); i++)
+			// 		std::cout << ( i == 0 ? "": " ") << main[i];
+			// 	std::cout <<std::endl<<  "pen chain : " << std::endl;
+			// 	for ( size_t i = 0; i < pend.size(); i++)
+			// 		std::cout << ( i == 0 ? "": " ") << pend[i];
+			// }
+			// for ( size_t i = 0 ; i < main.size(); i++)
+			// {
+			// 	nums[i] = main[i];
+			// }
 		}
 		
 		std::vector<int> sort_numbers( std::vector<int> nums)
