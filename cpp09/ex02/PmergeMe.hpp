@@ -65,6 +65,10 @@ class PmergeMe {
 			}
 			// recurse over the vector with double the unit size
 			ford_jhonson_sort(nums, unit_size * 2);
+			
+			
+
+			
 
 			std::vector<int> main;
 			std::vector<int> pend;
@@ -84,21 +88,28 @@ class PmergeMe {
 				unit_leader.push_back(*(a_element + (unit_size -1)));
 				pend.insert(pend.end(), b_element, b_element + unit_size);
 				main.insert(main.end(), a_element, a_element + unit_size);
-				a_element += unit_size;
-				b_element += unit_size;
+				a_element += unit_size * 2;
+				b_element += unit_size * 2;
 				pend_count++;
 			}
 			if ( odd_exists )
 			{
 				// add the odd element whih couldnt find another unit to compare itself with , the element is situated after the last a element 
-				pend.insert(pend.end(), a_element, a_element + unit_size);
+				vec_iterator odd_start = nums.begin() + ( unit_size * possible_pairs); 
+				pend.insert(pend.end(), odd_start, odd_start + unit_size);
 				pend_count++;
 			}
-			// if ( unit_size == 4)
+			// if ( unit_size == 2)
 			// {
-			// 	// for ( size_t i = 0 ; i < unit_leader.size(); i++)
-			// 	// 	std::cout << (i == 0 ? "" : " ") << unit_leader[i];
-			// 	return ;
+			// 	std::cout << "the lisst " << std::endl;
+			// 	for (size_t i = 0; i < nums.size(); i++)
+			// 	{
+			// 		std::cout << nums[i] << " ";
+			// 	}
+
+			// 	std::cout << std::endl;
+			// 	for ( size_t i = 0 ; i < unit_leader.size(); i++)
+			// 		std::cout << (i == 0 ? "" : " ") << unit_leader[i];
 			// }
 			// the pairs of pairs of pairs ..... sort is now done , and the construction of the main and pend chain is done 
 			// we now need to insert the elements of the pend chain into the main chain using the jacob sthall sequence 
@@ -123,8 +134,25 @@ class PmergeMe {
 			size_t i = 0;
 			size_t on_limit = 0;
 
+				if ( unit_size == 1 )
+				{
+					std::cout << " before insert "<< std::endl;
+					for (size_t i = 0; i < unit_leader.size(); i++)
+					{
+						std::cout << unit_leader[i] << " ";
+						/* code */
+					}
+					std::cout << std::endl;
+					std::cout << " before pend "<< std::endl;
+					for (size_t i = 0; i < pend.size(); i++)
+					{
+						std::cout << pend[i] << " ";
+						/* code */
+					}
+					std::cout << std::endl;
+				}
 			int n = pend.size();
-			while ( n )
+			while ( pend.size() )
 			{
 				current_jacob = jacob_sequence[i];
 				number_of_insertions = current_jacob - previous_jacob;
@@ -132,26 +160,39 @@ class PmergeMe {
 					break;
 				vec_iterator pend_leader = pend.begin() + (number_of_insertions * unit_size) - 1;
 				
-				n-= number_of_insertions;
+				n -= number_of_insertions;
 				vec_iterator erase_pend = pend_leader;
 				while ( number_of_insertions )
 				{
-					vec_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count + on_limit;
+					vec_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count - on_limit;
 					vec_iterator leader_it = std::upper_bound( unit_leader.begin(), search_limit, *pend_leader);
 					if ( search_limit == leader_it )
 						on_limit++;
 					size_t insert_at = leader_it - unit_leader.begin();
 					unit_leader.insert(leader_it, *pend_leader);
 					vec_iterator main_insert = main.begin() + (insert_at * unit_size);
+					// std::cout << (pend_leader == pend.end()?  0: *pend_leader) << " bound " <<on_limit<<std::endl;
 					main.insert(main_insert, pend_leader - unit_size + 1, pend_leader + 1);
 					pend_leader -= unit_size;
 					number_of_insertions--;
 					pend_count--;
+					inserted_count++;
 				}
 				pend.erase(pend.begin(), erase_pend + 1);
 				on_limit = 0;
 				previous_jacob = current_jacob;
 				i++;
+			}
+			if ( unit_size == 1 )
+			{
+				std::cout << " after insert "<< std::endl;
+				for (size_t i = 0; i < unit_leader.size(); i++)
+				{
+					std::cout << unit_leader[i] << " ";
+					/* code */
+				}
+				std::cout << std::endl;
+				
 			}
 			// element might not all be inserted with the jacob sthall insertion style since the jacob number might be too big 
 			// then we need to insert the remaining eements in reverese order
@@ -159,33 +200,33 @@ class PmergeMe {
 			// size_of_main - size_of_pend + index_of_current_pend. */
 			if ( pend.size() )
 			{
-				for ( int i =  0 )
-				vec_iterator pend_leader = pend.end() - 1; 
-				for ( int i = pend.size() - 1; i >= 0; i--)
+				vec_iterator pend_leader = pend.end() - 1;
+
+				for ( int i = pend.size() - 1; i >= 0; i-= unit_size)
 				{
 					vec_iterator search_limit = unit_leader.begin() + ( (unit_leader.size() - pend_count) + i + odd_exists);
-					std::cout << *pend_leader << std::endl;
-
-					if ( search_limit > unit_leader.end()) std::cout << "OUTTTT " << std::endl;
-	std::cout << "diff " << search_limit - unit_leader.begin() << std::endl << " main size " << unit_leader.size() << std::endl << " pend size "<< pend_count << " i " << std::endl <<  i << " is odd " << odd_exists << std::endl;
-
 					vec_iterator leader_it = std::upper_bound(unit_leader.begin(), search_limit, *pend_leader);
 					int insert_at = leader_it - unit_leader.begin();
-					std::cout << insert_at << std::endl;
 					unit_leader.insert(leader_it, *pend_leader);
 					main.insert(main.begin() + (insert_at * unit_size), pend_leader - unit_size + 1, pend_leader + 1);
 					pend_leader -= unit_size;
 					pend_count--;
 				}
 			}
+			std::cout << "unit size " << unit_size<< std::endl;
 			for ( size_t i = 0; i < main.size(); i++)
+			{
 				nums[i] = main[i];
+				std::cout << main[i] << " ";
+			}
+			std::cout << std::endl;
 		}
 		
 		std::vector<int> sort_numbers( std::vector<int> nums)
 		{
-			generate_jacob_sequence(nums.size() / 3);
+			generate_jacob_sequence(nums.size());
 			ford_jhonson_sort(nums, 1);
+			std::cout << "hopefully soreted list " << std::endl;
 			for ( size_t i = 0 ; i < nums.size(); i++)
 			{
 				std::cout << ( i == 0? '\0' : ' ') << nums[i];
