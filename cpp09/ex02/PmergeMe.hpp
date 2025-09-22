@@ -68,25 +68,38 @@ class PmergeMe {
 
 			std::vector<int> main;
 			std::vector<int> pend;
+			//serves as a simplified indexing of the biggest elements of each unit in order to do the binary search only on the biggest element of the chain
+			std::vector<int> unit_leader;
 
 			//insert the first and the second element of the vector since we know b1 is less then a1
 			main.insert(main.begin(), nums.begin(), nums.begin() + (unit_size * 2));
-
+			unit_leader.push_back(main[unit_size - 1]);
+			unit_leader.push_back(main[((2 * unit_size) - 1)]);
+			int pend_count = 0;
 			vec_iterator b_element = nums.begin() + (unit_size * 2);
 			vec_iterator a_element = b_element + unit_size;
 			//insert all the big element of each pair of comparison in the main chain and the smallest of the pair into the pend chain the element can have a vairant size from 1 to ... they are not forcefully pairs
 			for ( int i = 2; i < possible_pairs; i+= 2)
 			{
-				main.insert(main.end(), a_element, a_element + unit_size);
+				unit_leader.push_back(*(a_element + (unit_size -1)));
 				pend.insert(pend.end(), b_element, b_element + unit_size);
+				main.insert(main.end(), a_element, a_element + unit_size);
 				a_element += unit_size;
 				b_element += unit_size;
+				pend_count++;
 			}
 			if ( odd_exists )
 			{
 				// add the odd element whih couldnt find another unit to compare itself with , the element is situated after the last a element 
 				pend.insert(pend.end(), a_element, a_element + unit_size);
+				pend_count++;
 			}
+			// if ( unit_size == 4)
+			// {
+			// 	// for ( size_t i = 0 ; i < unit_leader.size(); i++)
+			// 	// 	std::cout << (i == 0 ? "" : " ") << unit_leader[i];
+			// 	return ;
+			// }
 			// the pairs of pairs of pairs ..... sort is now done , and the construction of the main and pend chain is done 
 			// we now need to insert the elements of the pend chain into the main chain using the jacob sthall sequence 
 			/* which goes as follows:
@@ -102,62 +115,82 @@ class PmergeMe {
 				how many elements we inserted
 				when inserting an element it could be supposed to be inserted above the bound by one meaning the bound willb now invalid so we need to move it back one place.
 			*/
+
 			size_t previous_jacob = 1;
 			size_t current_jacob;
 			size_t number_of_insertions;
 			size_t inserted_count = 0;
 			size_t i = 0;
-			size_t on_bound = 0;
+			size_t on_limit = 0;
 
+			int n = pend.size();
+			while ( n )
+			{
+				current_jacob = jacob_sequence[i];
+				number_of_insertions = current_jacob - previous_jacob;
+				if ( number_of_insertions > pend.size() )
+					break;
+				vec_iterator pend_leader = pend.begin() + (number_of_insertions * unit_size) - 1;
+				
+				n-= number_of_insertions;
+				vec_iterator erase_pend = pend_leader;
+				while ( number_of_insertions )
+				{
+					vec_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count + on_limit;
+					vec_iterator leader_it = std::upper_bound( unit_leader.begin(), search_limit, *pend_leader);
+					if ( search_limit == leader_it )
+						on_limit++;
+					size_t insert_at = leader_it - unit_leader.begin();
+					unit_leader.insert(leader_it, *pend_leader);
+					vec_iterator main_insert = main.begin() + (insert_at * unit_size);
+					main.insert(main_insert, pend_leader - unit_size + 1, pend_leader + 1);
+					pend_leader -= unit_size;
+					number_of_insertions--;
+					pend_count--;
+				}
+				pend.erase(pend.begin(), erase_pend + 1);
+				on_limit = 0;
+				previous_jacob = current_jacob;
+				i++;
+			}
+			// element might not all be inserted with the jacob sthall insertion style since the jacob number might be too big 
+			// then we need to insert the remaining eements in reverese order
+			// to calculate the search limit for the each of the ramaining elements we use 
+			// size_of_main - size_of_pend + index_of_current_pend. */
+			if ( pend.size() )
+			{
+				for ( int i =  0 )
+				vec_iterator pend_leader = pend.end() - 1; 
+				for ( int i = pend.size() - 1; i >= 0; i--)
+				{
+					vec_iterator search_limit = unit_leader.begin() + ( (unit_leader.size() - pend_count) + i + odd_exists);
+					std::cout << *pend_leader << std::endl;
 
-		// the element shoul dbe pushed at the edges of the units idiot!
+					if ( search_limit > unit_leader.end()) std::cout << "OUTTTT " << std::endl;
+	std::cout << "diff " << search_limit - unit_leader.begin() << std::endl << " main size " << unit_leader.size() << std::endl << " pend size "<< pend_count << " i " << std::endl <<  i << " is odd " << odd_exists << std::endl;
 
-
-			// while ( pend.size() )
-			// {
-			// 	current_jacob = jacob_sequence[i];
-			// 	number_of_insertions = current_jacob - previous_jacob;
-			// 	if ( number_of_insertions > pend.size() )
-			// 		break;
-			// 	while ( number_of_insertions )
-			// 	{
-			// 		vec_iterator search_limit = main.begin() + (current_jacob + inserted_count + on_bound);
-			// 		vec_iterator insertion_it = std::upper_bound(main.begin(), search_limit, pend[number_of_insertions - 1]);
-			// 		if ( insertion_it == search_limit - 1)
-			// 			on_bound++;
-			// 		main.insert(insertion_it, pend[number_of_insertions - 1]);
-			// 		number_of_insertions--;
-			// 	}
-			// 	//remove all the element that were inserted from the main chain
-			// 	pend.erase(pend.begin(), pend.begin() + (current_jacob - previous_jacob));
-			// 	on_bound = 0;
-			// 	previous_jacob = current_jacob;
-			// 	i++;
-			// }
-			// if ( pend.size())
-			// {
-			// 	std::cout << "level " << unit_size << std::endl;
-			// 	for ( size_t i = 0; i < main.size(); i++)
-			// 		std::cout << ( i == 0 ? "": " ") << main[i];
-			// 	std::cout <<std::endl<<  "pen chain : " << std::endl;
-			// 	for ( size_t i = 0; i < pend.size(); i++)
-			// 		std::cout << ( i == 0 ? "": " ") << pend[i];
-			// }
-			// for ( size_t i = 0 ; i < main.size(); i++)
-			// {
-			// 	nums[i] = main[i];
-			// }
+					vec_iterator leader_it = std::upper_bound(unit_leader.begin(), search_limit, *pend_leader);
+					int insert_at = leader_it - unit_leader.begin();
+					std::cout << insert_at << std::endl;
+					unit_leader.insert(leader_it, *pend_leader);
+					main.insert(main.begin() + (insert_at * unit_size), pend_leader - unit_size + 1, pend_leader + 1);
+					pend_leader -= unit_size;
+					pend_count--;
+				}
+			}
+			for ( size_t i = 0; i < main.size(); i++)
+				nums[i] = main[i];
 		}
 		
 		std::vector<int> sort_numbers( std::vector<int> nums)
 		{
 			generate_jacob_sequence(nums.size() / 3);
 			ford_jhonson_sort(nums, 1);
-			// for ( size_t i = 0 ; i < nums.size(); i++)
-			// {
-			// 	std::cout << ( i == 0? '\0' : ' ') << nums[i];
-			// }
-				// std::cout << std::endl;
+			for ( size_t i = 0 ; i < nums.size(); i++)
+			{
+				std::cout << ( i == 0? '\0' : ' ') << nums[i];
+			}
+				std::cout << std::endl;
 			return nums;
 		}
 };

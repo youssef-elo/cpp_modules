@@ -1,6 +1,7 @@
 NAME=PmergeMe
 
-FLAGS= -Wall -Werror -Wextra -std=c++98
+# WFLAGS= -Wall -make Wextra -Werror 
+FLAGS= $(WFLAGS) -std=c++98
 FLAGS += -fsanitize=address -g
 
 FILES= main.cpp PmergeMe.cpp
