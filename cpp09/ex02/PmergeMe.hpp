@@ -6,14 +6,38 @@
 #include <algorithm>
 #include <iterator>
 
+int number_of_comparisons = 0 ;
+
+bool less_then(int l, int r)
+{
+	number_of_comparisons++;
+	return l < r;
+}
+bool greater_then(int l, int r)
+{
+	number_of_comparisons++;
+	return l > r;
+}
+
 
 class PmergeMe {
 	private:
 		typedef std::vector<int>::iterator vec_iterator;
-		static int number_of_comparisons;
 	public:
 		
+		static int number_of_comparisons;
 		std::vector<size_t> jacob_sequence;
+
+		bool is_sorted( std::vector<int>& nums)
+		{
+			for (size_t i = 1; i < nums.size(); i++)
+			{
+				if (nums[i] < nums[i - 1])
+					return false;
+			}
+			return true;
+		}
+
 		void generate_jacob_sequence( size_t n )
 		{
 			if ( n < jacob_sequence.size())
@@ -29,22 +53,7 @@ class PmergeMe {
 				jacob_sequence.push_back(jacob_sequence[i - 1] + 2 * jacob_sequence[i - 2]);
 			}
 		}
-
-		// void jacob_insertion(std::vector<int>& main_chain, std::vector<int>& pend_chain)
-		// {
-			
-		// }
-		bool less_then(int l, int r)
-		{
-			number_of_comparisons++;
-			return l < r;
-		}
-		bool greater_then(int l, int r)
-		{
-			number_of_comparisons++;
-			return l > r;
-		}
-
+		
 		void switch_units(std::vector<int>& nums, int first, int second, int unit_size)
 		{
 			vec_iterator first_it, second_it;
@@ -72,15 +81,11 @@ class PmergeMe {
 			for ( int i = unit_size - 1, comp = 0; comp < possible_pairs / 2; comp++, i += unit_size * 2)
 			{
 				//compare the biggest number of each unit to the next one if they are unsorted switch the whole units
-				if ( nums[i] , nums[i + unit_size])
+				if ( nums[i] > nums[i + unit_size])
 					switch_units(nums, i, i + unit_size, unit_size);
 			}
 			// recurse over the vector with double the unit size
 			ford_jhonson_sort(nums, unit_size * 2);
-			
-			
-
-			
 
 			std::vector<int> main;
 			std::vector<int> pend;
@@ -111,18 +116,7 @@ class PmergeMe {
 				pend.insert(pend.end(), odd_start, odd_start + unit_size);
 				pend_count++;
 			}
-			// if ( unit_size == 2)
-			// {
-			// 	std::cout << "the lisst " << std::endl;
-			// 	for (size_t i = 0; i < nums.size(); i++)
-			// 	{
-			// 		std::cout << nums[i] << " ";
-			// 	}
-
-			// 	std::cout << std::endl;
-			// 	for ( size_t i = 0 ; i < unit_leader.size(); i++)
-			// 		std::cout << (i == 0 ? "" : " ") << unit_leader[i];
-			// }
+			
 			// the pairs of pairs of pairs ..... sort is now done , and the construction of the main and pend chain is done 
 			// we now need to insert the elements of the pend chain into the main chain using the jacob sthall sequence 
 			/* which goes as follows:
@@ -139,52 +133,40 @@ class PmergeMe {
 				when inserting an element it could be supposed to be inserted above the bound by one meaning the bound willb now invalid so we need to move it back one place.
 			*/
 
-			size_t previous_jacob = 1;
-			size_t current_jacob;
-			size_t number_of_insertions;
-			size_t inserted_count = 0;
 			size_t i = 0;
 			size_t on_limit = 0;
+			size_t current_jacob;
+			size_t inserted_count = 0;
+			size_t previous_jacob = 1;
+			size_t number_of_insertions;
 
-				// if ( unit_size == 1 )
-				// {
-				// 	std::cout << " before insert "<< std::endl;
-				// 	for (size_t i = 0; i < unit_leader.size(); i++)
-				// 	{
-				// 		std::cout << unit_leader[i] << " ";
-				// 		/* code */
-				// 	}
-				// 	std::cout << std::endl;
-				// 	std::cout << " before pend "<< std::endl;
-				// 	for (size_t i = 0; i < pend.size(); i++)
-				// 	{
-				// 		std::cout << pend[i] << " ";
-				// 		/* code */
-				// 	}
-				// 	std::cout << std::endl;
-				// }
-			int n = pend.size();
-			// std::cout << unit_size << " first insertION \n";
+
 			while ( pend.size() )
 			{
 				current_jacob = jacob_sequence[i];
 				number_of_insertions = current_jacob - previous_jacob;
-				if ( number_of_insertions > pend.size() )
+				if ( number_of_insertions * unit_size > pend.size() )
 					break;
 				vec_iterator pend_leader = pend.begin() + (number_of_insertions * unit_size) - 1;
 				
-				n -= number_of_insertions;
 				vec_iterator erase_pend = pend_leader;
 				while ( number_of_insertions )
 				{
 					vec_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count - on_limit;
+					// if ( search_limit > unit_leader.end())
+					// {
+					// 	// on_limit++;
+					// 	std::cout << (pend_leader - pend.begin()) << "size " << pend.size() << std::endl;
+					// 	std::cout << "unit size " << unit_size << " pend element " << *pend_leader << std::endl;
+					// 	search_limit = unit_leader.end();
+					// }
 					vec_iterator leader_it = std::upper_bound( unit_leader.begin(), search_limit, *pend_leader);
 					if ( search_limit == leader_it )
 						on_limit++;
 					size_t insert_at = leader_it - unit_leader.begin();
 					unit_leader.insert(leader_it, *pend_leader);
 					vec_iterator main_insert = main.begin() + (insert_at * unit_size);
-					// std::cout << (pend_leader == pend.end()?  0: *pend_leader) << " bound " <<on_limit<<std::endl;
+
 					main.insert(main_insert, pend_leader - unit_size + 1, pend_leader + 1);
 					pend_leader -= unit_size;
 					number_of_insertions--;
@@ -196,17 +178,7 @@ class PmergeMe {
 				previous_jacob = current_jacob;
 				i++;
 			}
-			// if ( unit_size == 1 )
-			// {
-			// 	std::cout << " after insert "<< std::endl;
-			// 	for (size_t i = 0; i < unit_leader.size(); i++)
-			// 	{
-			// 		std::cout << unit_leader[i] << " ";
-			// 		/* code */
-			// 	}
-				// std::cout << std::endl;
-				
-			// }
+
 			// element might not all be inserted with the jacob sthall insertion style since the jacob number might be too big 
 			// then we need to insert the remaining eements in reverese order
 			// to calculate the search limit for the each of the ramaining elements we use 
@@ -214,43 +186,36 @@ class PmergeMe {
 			if ( pend.size() )
 			{
 				vec_iterator pend_leader = pend.end() - 1;
-			// std::cout << unit_size << " second  insertION " << " size of pend " << pend.size()  << " pend leader " << *pend_leader << std::endl;
+
 				pend_count = pend.size() / unit_size;
 				for ( int i = pend.size() - 1; i >= 0; i-= unit_size)
 				{
 					vec_iterator search_limit = unit_leader.begin() + ( (unit_leader.size() - pend_count) + (i / unit_size) + odd_exists);
+					if ( search_limit > unit_leader.end())
+						search_limit = unit_leader.end();
 					vec_iterator leader_it = std::upper_bound(unit_leader.begin(), search_limit, *pend_leader);
 					int insert_at = leader_it - unit_leader.begin();
-					// if ( search_limit > )
+
 					unit_leader.insert(leader_it, *pend_leader);
 					main.insert(main.begin() + (insert_at * unit_size), pend_leader - unit_size + 1, pend_leader + 1);
 					pend_leader -= unit_size;
-					pend_count--;
 				}
 			}
-			// std::cout << "unit size " << unit_size<< std::endl;
 			for ( size_t i = 0; i < main.size(); i++)
 			{
 				nums[i] = main[i];
-				// std::cout << main[i] << " ";
 			}
-			// std::cout << std::endl;
 		}
 		
 		std::vector<int> sort_numbers( std::vector<int> nums)
 		{
+			if ( is_sorted(nums))
+				return nums;
 			generate_jacob_sequence(nums.size());
 			ford_jhonson_sort(nums, 1);
-			// std::cout << "hopefully soreted list " << std::endl;
-			// for ( size_t i = 0 ; i < nums.size(); i++)
-			// {
-			// 	std::cout << ( i == 0? '\0' : ' ') << nums[i];
-			// }
-			// 	std::cout << std::endl;
 			return nums;
 		}
 };
 
-PmergeMe::number_of_comparisons = 0 ;
 
 #endif
