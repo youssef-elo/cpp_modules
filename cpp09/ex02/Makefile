@@ -1,6 +1,6 @@
 NAME=PmergeMe
 
-# WFLAGS= -Wall -make Wextra -Werror 
+WFLAGS= -Wall -Wextra -Werror 
 FLAGS= $(WFLAGS) -std=c++98
 FLAGS += -fsanitize=address -g
 
