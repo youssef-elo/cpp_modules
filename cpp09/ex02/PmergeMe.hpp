@@ -5,7 +5,11 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-
+#include <ctime>
+#include <sstream>
+#include <deque>
+#include <iomanip>
+#include <cmath>
 int number_of_comparisons = 0 ;
 
 bool less_then(int l, int r)
@@ -23,12 +27,14 @@ bool greater_then(int l, int r)
 class PmergeMe {
 	private:
 		typedef std::vector<int>::iterator vec_iterator;
+		typedef std::deque<int>::iterator deq_iterator;
 	public:
 		
 		static int number_of_comparisons;
 		std::vector<size_t> jacob_sequence;
 
-		bool is_sorted( std::vector<int>& nums)
+		template <typename Container>
+		bool is_sorted( Container& nums)
 		{
 			for (size_t i = 1; i < nums.size(); i++)
 			{
@@ -37,7 +43,8 @@ class PmergeMe {
 			}
 			return true;
 		}
-
+		long getjacob(long n) { return round((pow(2, n + 1) + pow(-1, n)) / 3); }
+		
 		void generate_jacob_sequence( size_t n )
 		{
 			if ( n < jacob_sequence.size())
@@ -54,9 +61,10 @@ class PmergeMe {
 			}
 		}
 		
-		void switch_units(std::vector<int>& nums, int first, int second, int unit_size)
+		template <typename Container>
+		void switch_units( Container& nums, int first, int second, int unit_size)
 		{
-			vec_iterator first_it, second_it;
+			typename Container::iterator first_it, second_it;
 			first_it = nums.begin() + first;
 			second_it = nums.begin() + second;
 			for ( int i = 0; i < unit_size; i++)
@@ -65,9 +73,9 @@ class PmergeMe {
 				--first_it;
 				--second_it;
 			}
-		} 
+		}
 
-		void ford_jhonson_sort(std::vector<int>& nums, int unit_size)
+		void ford_jhonson_sort_vector(std::vector<int>& nums, int unit_size)
 		{
 			int possible_pairs = nums.size() / unit_size;
 			bool odd_exists = false;
@@ -85,7 +93,7 @@ class PmergeMe {
 					switch_units(nums, i, i + unit_size, unit_size);
 			}
 			// recurse over the vector with double the unit size
-			ford_jhonson_sort(nums, unit_size * 2);
+			ford_jhonson_sort_vector(nums, unit_size * 2);
 
 			std::vector<int> main;
 			std::vector<int> pend;
@@ -98,8 +106,10 @@ class PmergeMe {
 			unit_leader.push_back(main[((2 * unit_size) - 1)]);
 			int pend_count = 0;
 			vec_iterator b_element = nums.begin() + (unit_size * 2);
-			vec_iterator a_element = b_element + unit_size;
+			if ( possible_pairs > 2)
+			{
 			//insert all the big element of each pair of comparison in the main chain and the smallest of the pair into the pend chain the element can have a vairant size from 1 to ... they are not forcefully pairs
+			vec_iterator a_element = b_element + unit_size;
 			for ( int i = 2; i < possible_pairs; i+= 2)
 			{
 				unit_leader.push_back(*(a_element + (unit_size -1)));
@@ -108,6 +118,7 @@ class PmergeMe {
 				a_element += unit_size * 2;
 				b_element += unit_size * 2;
 				pend_count++;
+			}
 			}
 			if ( odd_exists )
 			{
@@ -207,15 +218,157 @@ class PmergeMe {
 			}
 		}
 		
-		std::vector<int> sort_numbers( std::vector<int> nums)
+		void ford_jhonson_sort_deque(std::deque<int>& nums, int unit_size)
 		{
-			if ( is_sorted(nums))
-				return nums;
-			generate_jacob_sequence(nums.size());
-			ford_jhonson_sort(nums, 1);
-			return nums;
+			int possible_pairs = nums.size() / unit_size;
+			bool odd_exists = false;
+			if ( possible_pairs < 2)
+				return ;
+			if ( possible_pairs % 2 != 0)
+			{
+				possible_pairs--;
+				odd_exists = true;
+			}
+			for ( int i = unit_size - 1, comp = 0; comp < possible_pairs / 2; comp++, i += unit_size * 2)
+			{
+				if ( nums[i] > nums[i + unit_size])
+					switch_units(nums, i, i + unit_size, unit_size);
+			}
+			ford_jhonson_sort_deque(nums, unit_size * 2);
+
+			std::deque<int> main;
+			std::deque<int> pend;
+			std::deque<int> unit_leader;
+
+			main.insert(main.begin(), nums.begin(), nums.begin() + (unit_size * 2));
+			unit_leader.push_back(main[unit_size - 1]);
+			unit_leader.push_back(main[((2 * unit_size) - 1)]);
+			int pend_count = 0;
+			deq_iterator b_element = nums.begin() + (unit_size * 2);
+			std::cout << unit_size << " jdfjsdfjsfd " << possible_pairs <<  std::endl;
+			if ( possible_pairs > 2)
+			{
+				deq_iterator a_element = b_element + unit_size;
+				for ( int i = 2; i < possible_pairs; i+= 2)
+				{
+					unit_leader.push_back(*(a_element + (unit_size -1)));
+					pend.insert(pend.end(), b_element, b_element + unit_size);
+					main.insert(main.end(), a_element, a_element + unit_size);
+					a_element += unit_size * 2;
+					b_element += unit_size * 2;
+					pend_count++;
+				}
+			}
+			if ( odd_exists )
+			{
+				deq_iterator odd_start = nums.begin() + ( unit_size * possible_pairs); 
+				pend.insert(pend.end(), odd_start, odd_start + unit_size);
+				pend_count++;
+			}
+			
+
+			size_t i = 1;
+			size_t on_limit = 0;
+			size_t current_jacob;
+			size_t inserted_count = 0;
+			size_t previous_jacob = 1;
+			size_t number_of_insertions;
+
+
+			while ( pend.size() )
+			{
+				current_jacob = getjacob(i);
+				number_of_insertions = current_jacob - previous_jacob;
+				if ( number_of_insertions * unit_size > pend.size() )
+					break;
+				deq_iterator pend_leader = pend.begin() + (number_of_insertions * unit_size) - 1;
+				
+				deq_iterator erase_pend = pend_leader;
+				while ( number_of_insertions )
+				{
+					deq_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count - on_limit;
+					deq_iterator leader_it = std::upper_bound( unit_leader.begin(), search_limit, *pend_leader);
+					if ( search_limit == leader_it )
+						on_limit++;
+					size_t insert_at = leader_it - unit_leader.begin();
+					unit_leader.insert(leader_it, *pend_leader);
+					deq_iterator main_insert = main.begin() + (insert_at * unit_size);
+
+					main.insert(main_insert, pend_leader - unit_size + 1, pend_leader + 1);
+					pend_leader -= unit_size;
+					number_of_insertions--;
+					pend_count--;
+					inserted_count++;
+				}
+				pend.erase(pend.begin(), erase_pend + 1);
+				on_limit = 0;
+				previous_jacob = current_jacob;
+				i++;
+			}
+
+
+			if ( pend.size() )
+			{
+				deq_iterator pend_leader = pend.end() - 1;
+
+				pend_count = pend.size() / unit_size;
+				for ( int i = pend.size() - 1; i >= 0; i-= unit_size)
+				{
+					deq_iterator search_limit = unit_leader.begin() + ( (unit_leader.size() - pend_count) + (i / unit_size) + odd_exists);
+					if ( search_limit > unit_leader.end())
+						search_limit = unit_leader.end();
+					deq_iterator leader_it = std::upper_bound(unit_leader.begin(), search_limit, *pend_leader);
+					int insert_at = leader_it - unit_leader.begin();
+
+					unit_leader.insert(leader_it, *pend_leader);
+					main.insert(main.begin() + (insert_at * unit_size), pend_leader - unit_size + 1, pend_leader + 1);
+					pend_leader -= unit_size;
+				}
+			}
+			for ( size_t i = 0; i < main.size(); i++)
+			{
+				nums[i] = main[i];
+			}
+			main.clear();
+		}
+
+		void	sort_numbers( std::vector<int> nums_vec, std::deque<int> nums_deq)
+		{
+			size_t n = nums_deq.size();
+			size_t n_vec = nums_vec.size();
+			if (is_sorted(nums_vec))
+			{
+				std::cout << "Integer sequence is already sorted." << std::endl;
+				return ;
+			}
+
+			std::cout << "Before : " << std::endl;
+			for ( size_t i = 0; i < nums_vec.size(); i++)
+				std::cout << (i == 0? "" : " ") << nums_vec[i];
+			std::cout << std::endl;
+
+			generate_jacob_sequence(nums_vec.size());
+			clock_t start_vec = clock();
+			ford_jhonson_sort_vector(nums_vec, 1);
+			clock_t end_vec = clock();
+
+			clock_t start_deq = clock();
+			ford_jhonson_sort_deque(nums_deq, 1);
+			clock_t end_deq = clock();
+
+			if ( !is_sorted(nums_deq) || n != nums_deq.size()) std::cerr << "Deque failed to sort its elements." << std::endl;
+			if ( !is_sorted(nums_vec) || n_vec != nums_vec.size()) std::cerr << "Deque failed to sort its elements." << std::endl;
+
+			std::cout << "After: " << std::endl;
+			for ( size_t i = 0; i < nums_vec.size(); i++)
+				std::cout << ( i == 0 ? "" : " ") << nums_vec[i];
+
+			double vec_time = (double)(end_vec - start_vec) / (double)CLOCKS_PER_SEC;
+			double deq_time = (double)(end_deq - start_deq) / (double)CLOCKS_PER_SEC;
+
+			std::cout << std::fixed << std::setprecision(6) << std::endl << "Time to process a range of " << nums_vec.size() << " with std::vector : " << vec_time << " s."<<  std::endl;
+			std::cout << std::fixed << std::setprecision(6) << "Time to process a range of " << nums_deq.size() << " with std::deque : " << deq_time << " s."<< std::endl;
 		}
 };
-
 
 #endif
