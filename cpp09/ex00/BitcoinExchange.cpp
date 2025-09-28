@@ -144,6 +144,79 @@ void BitcoinExchange::print_err( error_code code, const std::string& line )
 		std::cerr << "Error: too large a number." << std::endl;
 }
 
+std::string BitcoinExchange::check_date_input(std::string& line, bool& check,  size_t& last)
+{
+	std::string date;
+	int i = 0;
+	for ( ; i < 4; i++)
+	{
+		if ( !isdigit(line[i]) )
+		{
+			check = false; 
+			return date;
+		}
+		date += line[i];
+	}
+	if ( line[i++] != '-')
+	{
+		check = false;
+		return date;
+	}
+	else 
+		date += line[i - 1];
+	int count = 0; 
+	while ( line[i] && isdigit(line[i]))
+	{
+		i++;
+		count++;
+	}
+	if ( count == 1)
+	{
+		date += '0';
+		date += line[i - 1];
+	}
+	else if ( count == 2)
+	{
+		date += line[i - 2];
+		date += line[i - 1];
+	}
+	else 
+	{
+		check = false;
+		return date;
+	}
+	if ( line[i++] != '-')
+	{
+		check = false; 
+		return date;
+	}
+	date+= '-';
+	count = 0; 
+	while ( line[i] && isdigit(line[i]))
+	{
+		i++;
+		count++;
+	}
+	if ( count == 1)
+	{
+		date += '0';
+		date += line[i - 1];
+	}
+	else if ( count == 2)
+	{
+		date += line[i - 2];
+		date += line[i - 1];
+	}
+	else 
+	{
+		check = false;
+		return date;
+	}
+	last = i;
+	check = check_date(date);
+	return date;
+}
+
 void BitcoinExchange::digest_input_line( std::string& line )
 {
 	float f_value;
@@ -152,18 +225,29 @@ void BitcoinExchange::digest_input_line( std::string& line )
 	double final_price;
 	database_it database_value;
 
-	if ( line.length() < 14)
+	if ( line.length() < 12)
 		return print_err(BAD_INPUT, line);
 
 	size_t seperator_position = line.find_first_of('|');
-	if ( seperator_position == std::string::npos  || seperator_position == line.length() - 1  || seperator_position != 11)
+	if ( seperator_position == std::string::npos  || seperator_position == line.length() - 1 ) // check seperator exists and not at the end of the string 
 		return print_err(BAD_INPUT, line);
-	if ( line[seperator_position - 1] != ' ' || line[seperator_position + 1] != ' ')
+	
+	if ( line[seperator_position - 1] != ' ' || line[seperator_position + 1] != ' ') // check the seperator is surronded with spaces 
 		return print_err(BAD_INPUT, line);
-	date = line.substr(0, seperator_position - 1 );
-	if ( !check_date(date))
+	bool check = true;
+	size_t last;
+	date = check_date_input(line, check, last);
+	if ( !check )
 		return print_err(BAD_DATE, line);
-	value  = line.substr(seperator_position + 2);
+
+	if (line[last] != ' ' || last + 1 != seperator_position)
+		return print_err(BAD_DATE, line);
+
+	int space_count  = 0;
+	for ( int j = seperator_position + 1; line[j] && line[j] == ' ';j++, space_count++);
+	if ( space_count != 1) // only one space is allowed after the seperator 
+		return print_err(BAD_DATE, line);
+	value = line.substr(seperator_position + 2);
 	std::stringstream ss(value);
 	ss >> f_value;
 	if ( ss.fail() || !ss.eof() )
