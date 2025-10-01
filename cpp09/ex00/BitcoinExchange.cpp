@@ -58,6 +58,7 @@ BitcoinExchange::BitcoinExchange()
 		else if ( !check_database_line(buffer) )
 		{
 			std::cerr << "Invalid line in data.csv file, line: " << line << std::endl;
+			data_stream.close();
 			throw std::runtime_error(std::string("Invalid line in data.csv file."));
 		}
 		line++;

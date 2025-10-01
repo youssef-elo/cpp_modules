@@ -1,5 +1,4 @@
 #include "PmergeMe.hpp"
-// PmergeMe::
 
 long PmergeMe::getjacob(long n)
 {
@@ -49,6 +48,7 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 			b_element += unit_size * 2;
 		}
 	}
+
 	if (odd_exists)
 	{
 		// add the odd element whih couldnt find another unit to compare itself with , the element is situated after the last a element
@@ -61,15 +61,15 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 	/* which goes as follows:
 		we iterate over the jacob sthall seuence first starting with 3 and then we substract it from the previous jacob sthal number
 		this gives us how many elements should be pushed from the pend to the main
-		we start at the end of the result of the substraction meaning 3 -1 = 2 we start at the index 1 and work backwards insert 1 the insert 0
+		we start at the end of the result of the substraction meaning 3 -1 = 2 we start at the index 1 and work backwards insert index 1 the insert index 0
 		if the result of the substraction is bigger then how many elements are in the pend chain we break out
 		the insertion is done using binary search from the the begining of the nums up to the bound element
-		the bound element is the matching pair of the pend element tha is first pointed to by the jacob sthall meaning the first one to be inserted each time we recalculate the jacob sthall number
+		the bound element is the matching pair of the pend element  first pointed to by the jacob sthall meaning the first one to be inserted each time we recalculate the jacob sthall number
 		if the pend element to be first inserted in the first iteration of the first insertion( jacob sthal 3) b3 then the bound is the matching one of that pair a3
 		and since we already know that the main chain has b1 a1 a2 a3 then the index of the match is 3 which is the same as the jacob sthall number ,
-		this stays true for all elemnents if we ont push anything into the main chain , but since we are updating it with elements from the pend we have to adjust that wit ading to the bound
+		this stays true for all elemnents if we ont push anything into the main chain , but since we are updating it with elements from the pend we have to adjust that with ading to the bound
 		how many elements we inserted
-		when inserting an element it could be supposed to be inserted above the bound by one meaning the bound willb now invalid so we need to move it back one place.
+		when inserting an element it could be supposed to be inserted above the bound by one meaning the bound will now invalid so we need to move it back one place.
 	*/
 
 	size_t i = 1;
@@ -91,13 +91,6 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 		while (number_of_insertions)
 		{
 			vec_iterator search_limit = unit_leader.begin() + current_jacob + inserted_count - on_limit;
-			// if ( search_limit > unit_leader.end())
-			// {
-			// 	// on_limit++;
-			// 	std::cout << (pend_leader - pend.begin()) << "size " << pend.size() << std::endl;
-			// 	std::cout << "unit size " << unit_size << " pend element " << *pend_leader << std::endl;
-			// 	search_limit = unit_leader.end();
-			// }
 			vec_iterator leader_it = std::upper_bound(unit_leader.begin(), search_limit, *pend_leader);
 			if (search_limit == leader_it)
 				on_limit++;
@@ -115,9 +108,8 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 		previous_jacob = current_jacob;
 		i++;
 	}
-
 	// element might not all be inserted with the jacob sthall insertion style since the jacob number might be too big
-	// then we need to insert the remaining eements in reverese order
+	// then we need to insert the remaining elements in reverese order
 	// to calculate the search limit for the each of the ramaining elements we use
 	// size_of_main - size_of_pend + index_of_current_pend. */
 	if (pend.size())
@@ -143,7 +135,6 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 		nums[i] = main[i];
 	}
 }
-
 
 void PmergeMe::ford_jhonson_sort_deque(std::deque<int> &nums, int unit_size)
 {
@@ -175,19 +166,16 @@ void PmergeMe::ford_jhonson_sort_deque(std::deque<int> &nums, int unit_size)
 	if (possible_pairs > 2)
 	{
 		deq_iterator a_element = b_element + unit_size;
-		for (int i = 2; i < possible_pairs; i += 2)
+		for (int i = 2; i < possible_pairs;)
 		{
-			if (std::distance(a_element, nums.end()) > step)
-			{
-				unit_leader.push_back(*(a_element + (unit_size - 1)));
-				main.insert(main.end(), a_element, a_element + unit_size);
-				a_element += step;
-			}
-			if (std::distance(b_element, nums.end()) > step)
-			{
-				pend.insert(pend.end(), b_element, b_element + unit_size);
-				b_element += step;
-			}
+			unit_leader.push_back(*(a_element + (unit_size - 1)));
+			main.insert(main.end(), a_element, a_element + unit_size);
+			pend.insert(pend.end(), b_element, b_element + unit_size);
+			i += 2;
+			if (i >= possible_pairs)
+				break;
+			a_element += step;
+			b_element += step;
 		}
 	}
 	if (odd_exists)
@@ -202,7 +190,6 @@ void PmergeMe::ford_jhonson_sort_deque(std::deque<int> &nums, int unit_size)
 	size_t inserted_count = 0;
 	size_t previous_jacob = 1;
 	size_t number_of_insertions;
-
 	while (pend.size())
 	{
 		current_jacob = getjacob(i);
@@ -236,7 +223,6 @@ void PmergeMe::ford_jhonson_sort_deque(std::deque<int> &nums, int unit_size)
 	if (pend.size())
 	{
 		deq_iterator pend_leader = pend.end() - 1;
-
 		int pend_count = pend.size() / unit_size;
 		for (int i = pend.size() - 1; i >= 0; i -= unit_size)
 		{
@@ -255,7 +241,6 @@ void PmergeMe::ford_jhonson_sort_deque(std::deque<int> &nums, int unit_size)
 	{
 		nums[i] = main[i];
 	}
-	main.clear();
 }
 
 void PmergeMe::sort_numbers(std::vector<int> nums_vec, std::deque<int> nums_deq)
@@ -281,16 +266,15 @@ void PmergeMe::sort_numbers(std::vector<int> nums_vec, std::deque<int> nums_deq)
 	ford_jhonson_sort_deque(nums_deq, 1);
 	clock_t end_deq = clock();
 
+	std::cout << "After: " << std::endl;
+	for (size_t i = 0; i < nums_deq.size(); i++)
+		std::cout << (i == 0 ? "" : " ") << nums_deq[i];
+
+	std::cout << std::endl;
 	if (!is_sorted(nums_deq) || n != nums_deq.size())
 		std::cerr << "Deque failed to sort its elements." << std::endl;
 	if (!is_sorted(nums_vec) || n_vec != nums_vec.size())
 		std::cerr << "Deque failed to sort its elements." << std::endl;
-
-	std::cout << "After: " << std::endl;
-	for (size_t i = 0; i < nums_vec.size(); i++)
-		std::cout << (i == 0 ? "" : " ") << nums_vec[i];
-
-	std::cout << std::endl;
 
 	double vec_time = (double)(end_vec - start_vec) / (double)CLOCKS_PER_SEC;
 	double deq_time = (double)(end_deq - start_deq) / (double)CLOCKS_PER_SEC;

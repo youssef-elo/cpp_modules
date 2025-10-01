@@ -11,7 +11,7 @@ bool parse_numbers( char **av, int ac, std::vector<int>& nums_vec, std::deque<in
 		ss >> tmp;
 		if ( ss.fail() || !ss.eof() || tmp < 0)
 		{
-			std::cerr << "Arguments should be a positive integer sequence only digits, only leading white spaces are allowed, no trailing, no negative numbers !" << std::endl;
+			std::cerr << "Arguments should be a positive integer sequence only digits, only leading white spaces are allowed, no trailing, no negative numbers!" << std::endl;
 			return false;
 		}
 		nums_vec.push_back(tmp);
