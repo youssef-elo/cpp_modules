@@ -1,5 +1,16 @@
 #include "PmergeMe.hpp"
 
+
+PmergeMe::PmergeMe(){}
+PmergeMe::~PmergeMe(){}
+PmergeMe::PmergeMe( const PmergeMe& other) {
+	(void) other;
+}
+PmergeMe& PmergeMe::operator=( const PmergeMe& other) {
+	(void) other;
+	return *this;
+}
+
 long PmergeMe::getjacob(long n)
 {
 	return round((pow(2, n + 1) + pow(-1, n)) / 3);
