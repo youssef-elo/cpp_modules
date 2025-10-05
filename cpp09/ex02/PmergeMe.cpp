@@ -51,7 +51,7 @@ void PmergeMe::ford_jhonson_sort_vector(std::vector<int> &nums, int unit_size)
 
 	if (odd_exists)
 	{
-		// add the odd element whih couldnt find another unit to compare itself with , the element is situated after the last a element
+		// add the odd element that couldnt find another unit to compare itself with , the element is situated after all the possible pairs 
 		vec_iterator odd_start = nums.begin() + (unit_size * possible_pairs);
 		pend.insert(pend.end(), odd_start, odd_start + unit_size);
 	}
@@ -272,9 +272,15 @@ void PmergeMe::sort_numbers(std::vector<int> nums_vec, std::deque<int> nums_deq)
 
 	std::cout << std::endl;
 	if (!is_sorted(nums_deq) || n != nums_deq.size())
+	{
 		std::cerr << "Deque failed to sort its elements." << std::endl;
+		return ;
+	}
 	if (!is_sorted(nums_vec) || n_vec != nums_vec.size())
+	{
 		std::cerr << "Deque failed to sort its elements." << std::endl;
+		return ;
+	}
 
 	double vec_time = (double)(end_vec - start_vec) / (double)CLOCKS_PER_SEC;
 	double deq_time = (double)(end_deq - start_deq) / (double)CLOCKS_PER_SEC;

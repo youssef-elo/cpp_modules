@@ -13,10 +13,15 @@ bool BitcoinExchange::read_file( const std::string& file_name)
 	}
 	while (std::getline(input_file, buffer))
 	{
-		if ( (line == 1 && buffer == "date | value") || buffer == "")
+		if ( (line == 1 && buffer == "date | value"))
 		{
 			line++;
-			continue;
+			continue ;
+		}
+		if ( buffer == "")
+		{
+			std::cerr << "Empty line." << std::endl;
+			continue ;
 		}
 		digest_input_line(buffer);
 		line++;
@@ -136,9 +141,9 @@ bool BitcoinExchange::check_database_line(const std::string& line )
 void BitcoinExchange::print_err( error_code code, const std::string& line )
 {
 	if ( code == BAD_INPUT )
-		std::cerr << "Error: bad_input => " << line << std::endl;
+		std::cerr << "Error: bad_input => \"" << line  << "\""<< std::endl;
 	if ( code == BAD_DATE )
-		std::cerr << "Error: Bad date format required YYYY-MM-DD/dates must exist => " << line << std::endl;
+		std::cerr << "Error: Bad date format required YYYY-MM-DD/dates must exist => \"" << line << "\""<< std::endl;
 	if ( code == NEGATIVE )
 		std::cerr << "Error: not a positive number." << std::endl;
 	if ( code == LARGE )
@@ -265,7 +270,7 @@ void BitcoinExchange::digest_input_line( std::string& line )
 		return ;
 	}
 	database_value = database.lower_bound(date);
-	if ( database_value == database.begin() && database_value->second != f_value)
+	if ( database_value == database.begin() && database_value->first != date)
 	{
 		std::cerr << "Error: No record of the date, or a lower one in the database: " << line << std::endl;
 		return ;
